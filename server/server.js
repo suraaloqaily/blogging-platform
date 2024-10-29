@@ -30,7 +30,8 @@ app.use((err, req, res, next) => {
 app.use("/auth", authRouter);
 app.use("/blogs", blogRouter);
 app.use("/user", userRouter);
-
+console.log(process.env.NODE_ENV, "process.env.NODE_ENV");
+console.log(process.env.PORT, "process.env.PORT");
 if (process.env.NODE_ENV !== "production") {
   app.listen(process.env.PORT, () => {
     console.log("Server is running on port", process.env.PORT);

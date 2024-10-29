@@ -34,12 +34,11 @@ const updateProfile = async (req, res) => {
       data: {
         name,
         email,
-        profilePicture: profileImage || undefined, // Use undefined if profileImage is not provided
-        updatedAt: new Date(), // Update the timestamp
+        profilePicture: profileImage || undefined,
+        updatedAt: new Date(),
       },
     });
 
-    // Update blogs associated with the user
     await prisma.blog.updateMany({
       where: { userId: userId },
       data: {
@@ -48,7 +47,6 @@ const updateProfile = async (req, res) => {
       },
     });
 
-    // Generate a new token
     const token = generateToken(updatedUser);
 
     res.json({

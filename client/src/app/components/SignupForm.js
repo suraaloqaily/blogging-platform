@@ -17,7 +17,6 @@ export default function SignupForm() {
   const register = async (userData) => {
     try {
       const result = await authService.register(userData);
-      console.log(result, "res");
       if (!result.success) {
       } else {
         setIsSuccess(true);

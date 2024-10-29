@@ -12,7 +12,6 @@ const Profile = () => {
   const containerRef = useRef(null);
   const router = useRouter();
 
-  // State hooks
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: user?.name || "",

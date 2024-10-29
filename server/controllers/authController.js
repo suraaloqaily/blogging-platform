@@ -25,18 +25,6 @@ const login = async (req, res) => {
       { expiresIn: "30d" }
     );
 
-    // const cookieOptions = {
-    //   httpOnly: true,
-    //   secure: process.env.NODE_ENV === "production",
-    //   sameSite: "lax",
-    //   maxAge: 30 * 24 * 60 * 60 * 1000,
-    //   path: "/",
-    //   domain:
-    //     process.env.NODE_ENV === "production"
-    //       ? process.env.DOMAIN_URL
-    //       : "localhost",
-    // };
-
     return res.status(200).json({
       success: true,
       token,
@@ -78,9 +66,7 @@ const checkSession = async (req, res) => {
   }
 };
 
-const signup = async ( req, res ) =>
-{
-  console.log(req)
+const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -93,7 +79,6 @@ const signup = async ( req, res ) =>
         password: hashedPassword,
       },
     });
-    console.log(newUser);
     const userResponse = { ...newUser };
     delete userResponse.password;
 

@@ -35,7 +35,7 @@ const createComment = async (req, res) => {
 
     return res.status(201).json({
       ...commentWithAuthor,
-      author_name: commentWithAuthor.user.name, // Add author name to the response
+      author_name: commentWithAuthor.user.name,  
     });
   } catch (error) {
     console.error("Error creating comment:", error);
@@ -50,9 +50,8 @@ const getBlogComments = async (req, res) => {
   try {
     const { blog_id } = req.params;
 
-    // Fetch comments for the blog using Prisma
-    const comments = await prisma.comment.findMany({
-      where: { blogId: parseInt(blog_id) }, // Ensure blog_id is an integer
+     const comments = await prisma.comment.findMany({
+      where: { blogId: parseInt(blog_id) },  
       include: {
         user: {
           select: {
@@ -66,8 +65,7 @@ const getBlogComments = async (req, res) => {
       },
     });
 
-    // Map comments to include author information
-    const commentsWithAuthors = comments.map((comment) => ({
+     const commentsWithAuthors = comments.map((comment) => ({
       ...comment,
       author_name: comment.user.name,
       author_email: comment.user.email,

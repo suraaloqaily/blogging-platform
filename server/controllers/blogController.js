@@ -168,10 +168,9 @@ const updateBlog = async (req, res) => {
 
 const likeBlog = async (req, res) => {
   try {
-    const { id } = req.params; // Blog ID from request parameters
-    const userId = req.user.id; // User ID from authenticated user
+    const { id } = req.params;
+    const userId = req.user.id;
 
-    // Check if the blog exists
     const blog = await prisma.blog.findUnique({
       where: { id },
     });
@@ -180,7 +179,6 @@ const likeBlog = async (req, res) => {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    // Check if the user has already liked the blog
     const existingLike = await prisma.like.findUnique({
       where: {
         userId_blogId: {
@@ -191,7 +189,6 @@ const likeBlog = async (req, res) => {
     });
 
     if (existingLike) {
-      // If the user has already liked the blog, remove the like
       await prisma.like.delete({
         where: {
           userId_blogId: {
@@ -202,7 +199,6 @@ const likeBlog = async (req, res) => {
       });
       return res.json({ message: "Like removed" });
     } else {
-      // If the user has not liked the blog, add a like
       await prisma.like.create({
         data: {
           userId,
@@ -219,10 +215,9 @@ const likeBlog = async (req, res) => {
 
 const checkLike = async (req, res) => {
   try {
-    const { id } = req.params; // Blog ID from request parameters
-    const userId = req.user.id; // User ID from authenticated user
+    const { id } = req.params;
+    const userId = req.user.id;
 
-    // Check if the user has liked the blog
     const existingLike = await prisma.like.findUnique({
       where: {
         userId_blogId: {

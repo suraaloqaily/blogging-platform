@@ -12,9 +12,7 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     const cookies = parseCookies();
     const isAuthenticated = !!cookies.token;
-    console.log(isAuthenticated, "isAuthenticated");
-    console.log(isAuthRoute, "isAuthRoute");
-    console.log(router.pathname, "router.pathname");
+
     if (isAuthenticated && isAuthRoute) {
       router.push("/homepage");
       return;
