@@ -1,50 +1,73 @@
-name: "Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧"
-description: "Sets up Node.js, caches dependencies, and installs them."
-runs:
-  using: "composite"
-  steps:
-    - name: Checkout code with submodules
-      uses: actions/checkout@v2
-      with:
-        submodules: recursive  
+name: "Build and Deploy Next.js Application"
+description: "Sets up Node.js, caches dependencies, installs them, runs tests, builds Next.js static files, and deploys."
 
-    - name: Log current directory
-      run: |
-        echo "Current directory: $(pwd)"
-        echo "Listing files:"
-        ls -la
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-    - name: Set up Node.js for client
-      uses: actions/setup-node@v2
-      with:
-        node-version: "18.18.0"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build and Test Next.js Application
 
-    - name: Log Node.js version for client
-      run: node -v
+    steps:
+      - name: Checkout code with submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive  
 
-    - name: Install client dependencies
-      working-directory: /client
-      run: |
-        echo "Installing client dependencies in $(pwd)"
-        npm install --legacy-peer-deps
+      - name: Set up Node.js for client
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.18.0"
+          cache: "npm"  # Enable caching for npm dependencies
 
-    - name: Run client tests
-      working-directory: /client
-      run: |
-        echo "Running client tests in $(pwd)..."
-        npx jest
+      - name: Install client dependencies
+        working-directory: ./client
+        run: |
+          echo "Installing client dependencies in $(pwd)"
+          npm install --legacy-peer-deps
 
-    - name: Set up Node.js for server
-      uses: actions/setup-node@v2
-      with:
-        node-version: "18.18.0"
+      - name: Run client tests
+        working-directory: ./client
+        run: |
+          echo "Running client tests in $(pwd)..."
+          npx jest
 
-    - name: Log Node.js version for server
-      run: node -v
+      - name: Build Next.js static files
+        working-directory: ./client
+        run: |
+          echo "Building Next.js static files..."
+          npm run build
+          npm run export  # Export static files (if configured for static export)
 
-    - name: Install server dependencies
-      working-directory: /server
-      run: |
-       ls
-        echo "Installing server dependencies in $(pwd)"
-        npm install --legacy-peer-deps
+      - name: Upload Next.js static files as artifact
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: nextjs-static-files
+          path: ./client/out  # Assumes the static files are output to `out`
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy to GitHub Pages
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download Next.js static files
+        uses: actions/download-artifact@v2
+        with:
+          name: nextjs-static-files
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./client/out 
