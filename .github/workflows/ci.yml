@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code with submodules
         uses: actions/checkout@v2
         with:
-          submodules: recursive  # Initializes and updates submodules
+          submodules: recursive  
 
       # Step 2: Client Setup
       - name: Set up Node.js for client
@@ -51,15 +51,4 @@ jobs:
           Get-ChildItem -Force
           npm install --legacy-peer-deps
 
-      # Step 4: Deploy to Heroku
-      - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
-        run: |
-          # Install Heroku CLI
-          curl https://cli-assets.heroku.com/install.sh | sh
-          # Authenticate using the API key
-          heroku auth:token
-          heroku git:remote -a your-heroku-app-name  # Replace with your Heroku app name
-          # Push to Heroku
-          git push heroku main
+     
