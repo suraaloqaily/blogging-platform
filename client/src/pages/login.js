@@ -17,8 +17,7 @@ const Login = () => {
   if (loading) {
     return <Loading />;
   }
-
-  return <LoginForm />;
+  return !user ? <LoginForm /> : null;
 };
 
 export default Login;

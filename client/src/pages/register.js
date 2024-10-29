@@ -14,6 +14,6 @@ export default function RegisterPage() {
   }, [user, loading, router]);
 
   if (loading) return <Loading />;
-  console.log("");
+
   return !user ? <SignupForm /> : null;
 }

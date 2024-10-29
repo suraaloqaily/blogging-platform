@@ -55,7 +55,7 @@ export default function LoginForm() {
           />
           <button type="submit">Login</button>
           <p className={styles.switchText}>
-            Don't have an account? <Link href="/register">Register here </Link>
+            Do not have an account? <Link href="/register">Register here </Link>
           </p>
         </form>
       </div>

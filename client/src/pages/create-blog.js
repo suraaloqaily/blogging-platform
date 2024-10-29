@@ -20,6 +20,27 @@ const CreateBlog = () => {
     }
   }, [user, router]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        router.push("/homepage");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [router]);
+  useEffect(() => {
+    if (message.text) {
+      const timer = setTimeout(() => setMessage({ text: "", type: "" }), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
   if (!user) {
     return <Loading />;
   }
@@ -57,25 +78,11 @@ const CreateBlog = () => {
     }
   };
 
-  const handleClickOutside = (event) => {
-    if (containerRef.current && !containerRef.current.contains(event.target)) {
-      router.push("/homepage");
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (message.text) {
-      const timer = setTimeout(() => setMessage({ text: "", type: "" }), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
+  // const handleClickOutside = (event) => {
+  //   if (containerRef.current && !containerRef.current.contains(event.target)) {
+  //     router.push("/homepage");
+  //   }
+  // };
 
   return (
     <div

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import styles from "../styles/Blog.module.css";
 import avatar_icon from "@/pages/Assets/profile-avatar.png";
 import apiService from "@/services/BlogsApiServices";
+import Image from "next/image";
 
 const Blog = ({ data, isAuthor }) => {
   const { user } = useAuth();
@@ -92,10 +93,12 @@ const Blog = ({ data, isAuthor }) => {
             <h2>{truncateText(data.title, 25)}</h2>
           </div>
           <span className={styles.author}>
-            <img
+            <Image
               src={data?.author_image || avatar_icon.src}
               alt={data.author_name}
               className={styles.authorImage}
+              width={50}
+              height={50}
             />
             By: {data.author_name}
           </span>

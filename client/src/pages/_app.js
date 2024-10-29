@@ -12,7 +12,9 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     const cookies = parseCookies();
     const isAuthenticated = !!cookies.token;
-
+    console.log(isAuthenticated, "isAuthenticated");
+    console.log(isAuthRoute, "isAuthRoute");
+    console.log(router.pathname, "router.pathname");
     if (isAuthenticated && isAuthRoute) {
       router.push("/homepage");
       return;
@@ -22,7 +24,7 @@ export default function App({ Component, pageProps }) {
       router.push("/login");
       return;
     }
-  }, [router.pathname]);
+  }, [router.pathname, isAuthRoute, router]);
 
   return (
     <AuthProvider>

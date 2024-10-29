@@ -15,11 +15,11 @@ const TypingText = ({ text, speed = 50, name }) => {
       return () => clearTimeout(timeoutId);
     } else if (index >= text.length && !showFinalText) {
       setTimeout(() => {
-        setDisplayedText(`Welcome, ${name} 💫🌍`); 
+        setDisplayedText(`Welcome, ${name} 💫🌍`);
         setShowFinalText(true);
-      }, 1000); 
+      }, 1000);
     }
-  }, [index, text, speed, showFinalText]);
+  }, [index, text, speed, showFinalText, name]);
 
   return (
     <h1 style={showFinalText ? styles.finalText : styles.typingText}>

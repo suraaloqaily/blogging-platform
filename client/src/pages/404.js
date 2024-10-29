@@ -44,7 +44,9 @@ const Custom404 = () => {
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>404 - Page Not Found</h1>
-      <p style={styles.text}>The blog post you're looking for doesn't exist.</p>
+      <p style={styles.text}>
+        The blog post you&apos;re looking for doesn&apos;t exist.
+      </p>
       <Link
         href="/homepage"
         style={styles.link}>

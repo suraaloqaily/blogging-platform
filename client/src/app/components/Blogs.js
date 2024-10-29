@@ -3,6 +3,7 @@ import Blog from "./Blog";
 import { useBlogs } from "@/app/context/BlogsContext";
 import { useAuth } from "@/app/context/AuthContext";
 import styles from "@/styles/Blogs.module.css";
+import Link from "next/link";
 
 const Blogs = () => {
   const { blogs } = useBlogs();
@@ -11,7 +12,7 @@ const Blogs = () => {
   if (!user) {
     return (
       <div className={styles.unauthorizedMessage}>
-        Please <a href="/login">login</a> or <a href="/register">signup</a> to
+        Please <Link href="/login">login</Link> or <Link href="/register">signup</Link> to
         view blogs
       </div>
     );
