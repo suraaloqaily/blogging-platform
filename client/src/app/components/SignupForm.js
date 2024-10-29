@@ -22,7 +22,7 @@ export default function SignupForm() {
       } else {
         setIsSuccess(true);
         setTimeout(() => {
-          router.push("/login");
+          router.push("/blogging-platform/login");
         }, 2000);
       }
     } catch (err) {
@@ -68,7 +68,7 @@ export default function SignupForm() {
       } else {
         setIsSuccess(true);
         setTimeout(() => {
-          router.push("/login");
+          router.push("/blogging-platform/login");
         }, 4000);
       }
     } catch (err) {
@@ -83,12 +83,12 @@ export default function SignupForm() {
       <div className={styles.authWrapper}>
         <div className={styles.authNav}>
           <Link
-            href="/login"
+            href="/blogging-platform/login"
             className={styles.inactiveNav}>
             Login
           </Link>
           <Link
-            href="/register"
+            href="/blogging-platform/register"
             className={styles.activeNav}>
             Register
           </Link>
@@ -144,7 +144,8 @@ export default function SignupForm() {
               {isLoading ? <Loading /> : "Register"}
             </button>
             <p className={styles.switchText}>
-              Already have an account? <Link href="/login">Login here</Link>
+              Already have an account?{" "}
+              <Link href="/blogging-platform/login">Login here</Link>
             </p>
           </form>
         )}

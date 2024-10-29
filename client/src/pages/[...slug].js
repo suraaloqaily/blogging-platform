@@ -45,7 +45,7 @@ const Custom404 = () => {
     <div style={styles.container}>
       <h1 style={styles.title}>404 - Page Not Found</h1>
       <Link
-        href="/homepage"
+        href="/blogging-platform/homepage"
         style={styles.link}>
         Return to Home
       </Link>

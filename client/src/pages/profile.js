@@ -80,7 +80,7 @@ const Profile = () => {
 
   const handleClickOutside = (event) => {
     if (containerRef.current && !containerRef.current.contains(event.target)) {
-      router.push("/homepage");
+      router.push("/blogging-platform/homepage");
     }
   };
 
@@ -118,7 +118,7 @@ const Profile = () => {
             </button>
             {isEditing ? null : (
               <button
-                onClick={() => router.push("/homepage")}
+                onClick={() => router.push("/blogging-platform/homepage")}
                 className={styles.closeButton}
                 aria-label="Close profile settings">
                 <FaTimes />

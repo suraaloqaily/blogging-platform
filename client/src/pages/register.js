@@ -9,7 +9,7 @@ export default function RegisterPage() {
   const router = useRouter();
   useEffect(() => {
     if (user && !loading) {
-      router.push("/homepage");
+      router.push("/blogging-platform/homepage");
     }
   }, [user, loading, router]);
 

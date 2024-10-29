@@ -6,7 +6,10 @@ import { useEffect } from "react";
 import "@/styles/globals.css";
 export default function App({ Component, pageProps }) {
   const router = useRouter();
-  const authRoutes = ["/login", "/register"];
+  const authRoutes = [
+    "/blogging-platform/login",
+    "/blogging-platform/register",
+  ];
   const isAuthRoute = authRoutes.includes(router.pathname);
 
   useEffect(() => {
@@ -16,12 +19,12 @@ export default function App({ Component, pageProps }) {
     console.log(isAuthRoute, "isAuthRoute");
     console.log(router.pathname, "router.pathname");
     if (isAuthenticated && isAuthRoute) {
-      router.push("/homepage");
+      router.push("/blogging-platform/homepage");
       return;
     }
 
     if (!isAuthenticated && !isAuthRoute && router.pathname !== "/") {
-      router.push("/login");
+      router.push("/blogging-platform/login");
       return;
     }
   }, [router.pathname, isAuthRoute, router]);

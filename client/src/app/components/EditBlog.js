@@ -15,7 +15,7 @@ const EditBlog = ({ blog }) => {
 
   useEffect(() => {
     if (blog && user && blog.user_id !== user.id) {
-      router.push("/homepage");
+      router.push("/blogging-platform/homepage");
     }
   }, [blog, user, router]);
 
@@ -24,7 +24,7 @@ const EditBlog = ({ blog }) => {
     try {
       const updatedBlog = { title, content };
       await updateBlog(id, updatedBlog);
-      router.push("/homepage");
+      router.push("/blogging-platform/homepage");
     } catch (error) {
       console.error("Error updating blog:", error);
     }
@@ -57,7 +57,7 @@ const EditBlog = ({ blog }) => {
           </button>
           <button
             type="button"
-            onClick={() => router.push("/homepage")}
+            onClick={() => router.push("/blogging-platform/homepage")}
             className={styles.cancelButton}>
             Cancel
           </button>

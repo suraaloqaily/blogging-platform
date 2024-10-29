@@ -26,7 +26,7 @@ const BlogPage = () => {
         console.error("Error fetching blog details:", error);
         setError("Failed to load blog details. Redirecting to homepage...");
         setTimeout(() => {
-          router.push("/homepage");
+          router.push("/blogging-platform/homepage");
         }, 1000);
       } finally {
         setLoading(false);
@@ -37,7 +37,7 @@ const BlogPage = () => {
   }, [id, router]);
 
   const handleClose = () => {
-    router.push("/homepage");
+    router.push("/blogging-platform/homepage");
   };
 
   if (loading) {

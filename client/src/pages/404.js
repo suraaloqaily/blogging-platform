@@ -48,7 +48,7 @@ const Custom404 = () => {
         The blog post you&apos;re looking for doesn&apos;t exist.
       </p>
       <Link
-        href="/homepage"
+        href="/blogging-platform/homepage"
         style={styles.link}>
         Return to Home
       </Link>

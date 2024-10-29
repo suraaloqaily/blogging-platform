@@ -46,7 +46,10 @@ const Blog = ({ data, isAuthor }) => {
 
   const handleEdit = (e) => {
     e.stopPropagation();
-    router.push({ pathname: "/edit-blog/[id]", query: { id: data.id } });
+    router.push({
+      pathname: "/blogging-platform/edit-blog/[id]",
+      query: { id: data.id },
+    });
   };
 
   const handleLike = async (e) => {
@@ -77,7 +80,7 @@ const Blog = ({ data, isAuthor }) => {
 
   const handleOpenDetail = (e) => {
     e.stopPropagation();
-    router.push(`/blog/${data.id}`);
+    router.push(`/blogging-platform/blog/${data.id}`);
   };
 
   const truncateText = (text, length) =>

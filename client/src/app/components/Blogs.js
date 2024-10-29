@@ -12,8 +12,8 @@ const Blogs = () => {
   if (!user) {
     return (
       <div className={styles.unauthorizedMessage}>
-        Please <Link href="/login">login</Link> or <Link href="/register">signup</Link> to
-        view blogs
+        Please <Link href="/blogging-platform/login">login</Link> or{" "}
+        <Link href="/blogging-platform/register">signup</Link> to view blogs
       </div>
     );
   }

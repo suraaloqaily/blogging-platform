@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     if (user && !loading) {
-      router.push("/homepage");
+      router.push("/blogging-platform/homepage");
     }
   }, [user, loading, router]);
 

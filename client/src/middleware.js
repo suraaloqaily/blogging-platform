@@ -4,12 +4,12 @@ export function middleware(request) {
   const token = request.cookies.get("token");
 
   const protectedPaths = [
-    "/homepage",
-    "/blogs",
-    "/profile",
-    "/create-blog",
-    "/blog/.*",
-    "/edit-blog/.*",
+    "/blogging-platform/homepage",
+    "/blogging-platform/blogs",
+    "/blogging-platform/profile",
+    "/blogging-platform/create-blog",
+    "/blogging-platform/blog/.*",
+    "/blogging-platform/edit-blog/.*",
   ];
 
   const isProtectedPath = protectedPaths.some((path) =>
@@ -17,16 +17,25 @@ export function middleware(request) {
   );
 
   if (isProtectedPath && !token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(
+      new URL("/blogging-platform/login", request.url)
+    );
   }
 
-  if (token && request.nextUrl.pathname === "/login") {
-    return NextResponse.redirect(new URL("/homepage", request.url));
+  if (token && request.nextUrl.pathname === "/blogging-platform/login") {
+    return NextResponse.redirect(
+      new URL("/blogging-platform/homepage", request.url)
+    );
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/homepage", "/login", "/register", "/api/:path*"],
+  matcher: [
+    "/blogging-platform/homepage",
+    "/blogging-platform/login",
+    "/blogging-platform/register",
+    "/blogging-platform/api/:path*",
+  ],
 };

@@ -10,30 +10,30 @@
       "page": "/",
       "matchers": [
         {
-          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/homepage(.json)?[\\/#\\?]?$",
-          "originalSource": "/homepage"
+          "regexp": "^\\/blogging-platform(?:\\/(_next\\/data\\/[^/]{1,}))?\\/blogging-platform\\/homepage(.json)?[\\/#\\?]?$",
+          "originalSource": "/blogging-platform/homepage"
         },
         {
-          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/login(.json)?[\\/#\\?]?$",
-          "originalSource": "/login"
+          "regexp": "^\\/blogging-platform(?:\\/(_next\\/data\\/[^/]{1,}))?\\/blogging-platform\\/login(.json)?[\\/#\\?]?$",
+          "originalSource": "/blogging-platform/login"
         },
         {
-          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/register(.json)?[\\/#\\?]?$",
-          "originalSource": "/register"
+          "regexp": "^\\/blogging-platform(?:\\/(_next\\/data\\/[^/]{1,}))?\\/blogging-platform\\/register(.json)?[\\/#\\?]?$",
+          "originalSource": "/blogging-platform/register"
         },
         {
-          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/api(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(.json)?[\\/#\\?]?$",
-          "originalSource": "/api/:path*"
+          "regexp": "^\\/blogging-platform(?:\\/(_next\\/data\\/[^/]{1,}))?\\/blogging-platform\\/api(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(.json)?[\\/#\\?]?$",
+          "originalSource": "/blogging-platform/api/:path*"
         }
       ],
       "wasm": [],
       "assets": [],
       "env": {
-        "__NEXT_BUILD_ID": "Ji_ZKSXBRYPGQMfbcuLAj",
+        "__NEXT_BUILD_ID": "PdWyEvsi3qPGD27dBjCuA",
         "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "9srEzALPGuJar1fnKK9iAP5YKD/K+//6yzH5Tfn/gL0=",
-        "__NEXT_PREVIEW_MODE_ID": "52b8470d2584a50a7dcd66596332c130",
-        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "be48a394ddad20f22d1eb75527a744377866a8eca142cec8eb293c68cd9435e6",
-        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "b98e7f425c8902f3aa96ec7018996209029243390a2e93ef698923b0d3d30c80"
+        "__NEXT_PREVIEW_MODE_ID": "9f4c6ffb91a1e89c8317719eaf29c139",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "6936140d0315f68336e1f93fddd63d7c629f42939b4df0176bdf8109cb00172a",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "7a230ccba6821cef6c9fa7261c25d25600eba6d65f649828c3330336d6370ec9"
       }
     }
   },

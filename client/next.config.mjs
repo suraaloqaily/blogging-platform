@@ -2,12 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   output: "export",
-
+  basePath: "/blogging-platform",
   images: {
-    unoptimized: true, 
+    unoptimized: true,
   },
-   env: {
-    NEXT_PUBLIC_SERVER_API_URL: process.env.NEXT_PUBLIC_SERVER_API_URL || 'http://localhost:5000/'
+  env: {
+    NEXT_PUBLIC_SERVER_API_URL:
+      process.env.NEXT_PUBLIC_SERVER_API_URL || "http://localhost:5000/",
   },
 };
 
