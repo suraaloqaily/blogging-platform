@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: nextjs-static-files
-          path: ./client/out  # Assumes the static files are output to `out`
+          path: ./out  # Assumes the static files are output to `out`
 
   deploy:
     runs-on: ubuntu-latest
@@ -70,4 +70,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./client/out 
+          publish_dir: ./out
