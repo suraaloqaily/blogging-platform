@@ -23,13 +23,13 @@ runs:
       run: node -v
 
     - name: Install client dependencies
-      working-directory: client
+      working-directory: blogging-platform/client
       run: |
         echo "Installing client dependencies in $(pwd)"
         npm install --legacy-peer-deps
 
     - name: Run client tests
-      working-directory: client
+      working-directory: blogging-platform/client
       run: |
         echo "Running client tests in $(pwd)..."
         npx jest
@@ -37,13 +37,13 @@ runs:
     - name: Set up Node.js for server
       uses: actions/setup-node@v2
       with:
-        node-version: "18.18.0"  # Updated to 18.18.0
+        node-version: "18.18.0"
 
     - name: Log Node.js version for server
       run: node -v
 
     - name: Install server dependencies
-      working-directory: server
+      working-directory: blogging-platform/server
       run: |
         echo "Installing server dependencies in $(pwd)"
         npm install --legacy-peer-deps

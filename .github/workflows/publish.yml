@@ -28,13 +28,13 @@ jobs:
           ls -la
 
       - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
-
         uses: actions/setup-node@v2
         with:
           node-version: "18.18.0"
 
       - name: Install dependencies
-        run: npm install
+        working-directory: blogging-platform/server
+        run: npm install --legacy-peer-deps
 
       - name: Setup Pages ⚙️
         uses: actions/configure-pages@v4
@@ -42,9 +42,8 @@ jobs:
           static_site_generator: next
 
       - name: Build with Next.js 🏗️
-        run: |
-          echo "Building with Next.js in $(pwd)..."
-          npx next build
+        working-directory: blogging-platform/server
+        run: npx next build
 
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3
