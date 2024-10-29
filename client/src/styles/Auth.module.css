@@ -1,0 +1,144 @@
+.authContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.authForm {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.authForm h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.authForm input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.authForm button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #8eadd0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.authForm button:hover {
+  background-color: #0051b3;
+}
+
+.error {
+  color: #dc3545;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.authWrapper {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.authNav {
+  display: flex;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.authNav a {
+  flex: 1;
+  text-align: center;
+  padding: 1rem;
+  text-decoration: none;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.activeNav {
+  color: #8eadd0 !important;
+  border-bottom: 2px solid #8eadd0;
+  font-weight: bold;
+}
+
+.inactiveNav:hover {
+  color: #8eadd0 !important;
+}
+
+.switchText {
+  text-align: center;
+  margin-top: 1rem;
+  color: #666;
+}
+
+.switchText a {
+  color: #8eadd0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.switchText a:hover {
+  text-decoration: underline;
+}
+.successContainer {
+  text-align: center;
+  padding: 20px;
+}
+
+.successIcon {
+  width: 60px;
+  height: 60px;
+  background-color: #4caf50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: white;
+  font-size: 30px;
+}
+
+.buttonLoading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.buttonLoading .loadingContainer {
+  padding: 0;
+}
+
+.buttonLoading .spinner {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+  border-color: #ffffff;
+  border-top-color: transparent;
+}
+
+.authForm button {
+  position: relative;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

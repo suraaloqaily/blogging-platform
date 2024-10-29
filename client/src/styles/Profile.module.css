@@ -1,0 +1,271 @@
+.profileContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.profileCard {
+  position: relative;
+  background: white;
+  border-radius: 15px;
+  padding: 40px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.header h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+.closeButton,
+.editButton {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  color: #2c3e50;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  margin-left: 10px;
+}
+
+.closeButton:hover,
+.editButton:hover {
+  background-color: #f7f7f7;
+  color: #d9534f;
+  transform: scale(1.1);
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.avatarSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.avatarWrapper {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 4px solid white;
+}
+
+.avatarOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.avatarWrapper:hover .avatarOverlay {
+  opacity: 1;
+}
+
+.cameraIcon {
+  font-size: 28px;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.avatarOverlay span {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.inputGroup {
+  margin-bottom: 25px;
+}
+
+.inputGroup label {
+  display: block;
+  color: #495057;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.inputGroup input {
+  flex-shrink: 1;
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.inputGroup input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.inputGroup input.disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+
+  flex-shrink: 1;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.submitButton,
+.cancelButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.submitButton {
+  background: #007bff;
+  color: white;
+  flex: 2;
+}
+
+.submitButton:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.cancelButton {
+  background: #dc3545;
+  color: white;
+  flex: 1;
+}
+
+.cancelButton:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+.message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.updateImageButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #007bff;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.updateImageButton:hover {
+  background: #0056b3;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .profileCard {
+    padding: 25px;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .submitButton,
+  .cancelButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatarWrapper {
+    width: 120px;
+    height: 120px;
+  }
+
+  .header h2 {
+    font-size: 20px;
+  }
+}
