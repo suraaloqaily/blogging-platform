@@ -32,8 +32,8 @@ jobs:
         with:
           node-version: "18.18.0"
 
-      - name: Install dependencies
-        working-directory: server
+      - name: Install client dependencies
+        working-directory: client
         run: npm install --legacy-peer-deps
 
       - name: Setup Pages ⚙️
@@ -41,14 +41,14 @@ jobs:
         with:
           static_site_generator: next
 
-      # - name: Build with Next.js 🏗️
-      #   working-directory: server
-      #   run: npx next build
+      - name: Build with Next.js 🏗️
+        working-directory: client
+        run: npx next build
 
-      # - name: Upload artifact 📡
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: ./out
+      - name: Upload artifact 📡
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: client/.next  # Adjust if the output is in a different directory
 
   deploy:
     environment:
