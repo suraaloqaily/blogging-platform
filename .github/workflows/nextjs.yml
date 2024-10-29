@@ -38,7 +38,7 @@ jobs:
 
       - name: ✅ Run Tests
         working-directory: client
-        run: npm test   
+        run: npm run test   
 
       - name: 📤 Upload Build Artifact
         uses: actions/upload-pages-artifact@v3
