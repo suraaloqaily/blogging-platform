@@ -59,7 +59,7 @@ const CreateBlog = () => {
 
     try {
       await axios.post(
-        `${process.env.backend_base_path}blogs`,
+        `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
         {
           title,
           content,

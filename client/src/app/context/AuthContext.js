@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       const response = await fetch(
-        `${process.env.backend_base_path}auth/session`,
+        `${process.env.NEXT_PUBLIC_SERVER_API_URL}auth/session`,
         {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await fetch(
-        `${process.env.backend_base_path}auth/login`,
+        `${process.env.NEXT_PUBLIC_SERVER_API_URL}auth/login`,
         {
           method: "POST",
           headers: {
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch(`${process.env.backend_base_path}auth/logout`, {
+      await fetch(`${process.env.NEXT_PUBLIC_SERVER_API_URL}auth/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -101,7 +101,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const cookies = parseCookies();
       const response = await fetch(
-        `${process.env.backend_base_path}user/update`,
+        `${process.env.NEXT_PUBLIC_SERVER_API_URL}user/update`,
         {
           method: "PUT",
           headers: {

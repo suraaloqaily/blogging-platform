@@ -7,7 +7,7 @@ const nextConfig = {
     unoptimized: true,
   },
   env: {
-    backend_base_path: process.env.NEXT_PUBLIC_SERVER_API_URL,
+    NEXT_PUBLIC_SERVER_API_URL: process.env.NEXT_PUBLIC_SERVER_API_URL,
   },
 };
 
