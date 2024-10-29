@@ -11,7 +11,7 @@ class AuthService {
   async register(userData) {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_API_URL}auth/signup`,
+        `${process.env.backend_base_path}auth/signup`,
         {
           method: "POST",
           headers: {

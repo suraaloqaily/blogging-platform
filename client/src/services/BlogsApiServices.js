@@ -3,7 +3,7 @@ class ApiService {
     if (ApiService.instance) {
       return ApiService.instance;
     }
-    this.baseUrl = `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`;
+    this.baseUrl = `${process.env.backend_base_path}blogs`;
     ApiService.instance = this;
   }
 

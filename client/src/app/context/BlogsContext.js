@@ -10,12 +10,9 @@ export const BlogsProvider = ({ children }) => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
-        {
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${process.env.backend_base_path}blogs`, {
+        credentials: "include",
+      });
       if (response.ok) {
         const data = await response.json();
         setBlogs(data);
@@ -36,17 +33,14 @@ export const BlogsProvider = ({ children }) => {
   }, [user, router.pathname]);
   const createBlog = async (blogData) => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(blogData),
-        }
-      );
+      const response = await fetch(`${process.env.backend_base_path}blogs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(blogData),
+      });
 
       if (response.ok) {
         const newBlog = await response.json();
@@ -73,7 +67,7 @@ export const BlogsProvider = ({ children }) => {
   const updateBlog = async (id, blogData) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs/${id}`,
+        `${process.env.backend_base_path}blogs/${id}`,
         {
           method: "PUT",
           headers: {
@@ -98,7 +92,7 @@ export const BlogsProvider = ({ children }) => {
   const deleteBlog = async (id) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs/${id}`,
+        `${process.env.backend_base_path}blogs/${id}`,
         {
           method: "DELETE",
           credentials: "include",
