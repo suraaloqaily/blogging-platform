@@ -24,7 +24,7 @@ jobs:
         working-directory: client
         run: |
           pwd
-          ls -al
+          ls
           npm install --legacy-peer-deps
 
       - name: Run client tests
