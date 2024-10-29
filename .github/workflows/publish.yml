@@ -49,6 +49,7 @@ jobs:
         working-directory: client
         env:
           NEXT_PUBLIC_SERVER_API_URL: ${{ secrets.NEXT_PUBLIC_SERVER_API_URL }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
         run: npx next build
 
       - name: Upload artifact 📡
