@@ -16,7 +16,13 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(cookieParser());
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",  
+  sameSite: "None", 
+};
+app.use(cookieParser(cookieOptions));
+
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
