@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import SignupForm from "@/app/components/SignupForm";
 import Loading from "@/app/components/Loading";
 
-export default function RegisterPage() {
+export default function Home() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
