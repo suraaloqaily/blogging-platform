@@ -25,13 +25,15 @@ jobs:
       - name: Install client dependencies
         working-directory: client
         run: |
-          pwd
+          echo "Current directory: $(pwd)"
+          echo "Listing files:"
           Get-ChildItem -Force
           npm install --legacy-peer-deps
 
       - name: Run client tests
         working-directory: client
         run: |
+          echo "Running client tests..."
           npx jest
 
       # Server Setup
@@ -43,6 +45,13 @@ jobs:
       - name: Install server dependencies
         working-directory: server
         run: |
-          pwd
+          echo "Current directory: $(pwd)"
+          echo "Listing files:"
           Get-ChildItem -Force
           npm install --legacy-peer-deps
+
+      - name: Run server tests
+        working-directory: server
+        run: |
+          echo "Running server tests..."
+          npx jest
