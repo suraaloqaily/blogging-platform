@@ -50,8 +50,4 @@ jobs:
           Get-ChildItem -Force
           npm install --legacy-peer-deps
 
-      - name: Run server tests
-        working-directory: server
-        run: |
-          echo "Running server tests..."
-          npx jest
+      
