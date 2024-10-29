@@ -2,12 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/login": "pages/login.js",
-  "/register": "pages/register.js",
-  "/edit-blog/[id]": "pages/edit-blog/[id].js",
-  "/blog/[id]": "pages/blog/[id].js",
-  "/homepage": "pages/homepage.js",
-  "/create-blog": "pages/create-blog.js",
-  "/profile": "pages/profile.js",
-  "/your-blogs": "pages/your-blogs.js"
+  "/[...slug]": "pages/[...slug].js",
+  "/register": "pages/register.js"
 }
