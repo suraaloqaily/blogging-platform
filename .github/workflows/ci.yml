@@ -11,12 +11,13 @@ jobs:
     runs-on: windows-2022
 
     steps:
+      # Step 1: Checkout code with submodules
       - name: Checkout code with submodules
         uses: actions/checkout@v2
         with:
-          submodules: recursive  # This initializes and updates submodules
+          submodules: recursive  # Initializes and updates submodules
 
-      # Client Setup
+      # Step 2: Client Setup
       - name: Set up Node.js for client
         uses: actions/setup-node@v2
         with:
@@ -36,7 +37,7 @@ jobs:
           echo "Running client tests..."
           npx jest
 
-      # Server Setup
+      # Step 3: Server Setup
       - name: Set up Node.js for server
         uses: actions/setup-node@v2
         with:
@@ -50,4 +51,15 @@ jobs:
           Get-ChildItem -Force
           npm install --legacy-peer-deps
 
-      
+      # Step 4: Deploy to Heroku
+      - name: Deploy to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
+        run: |
+          # Install Heroku CLI
+          curl https://cli-assets.heroku.com/install.sh | sh
+          # Authenticate using the API key
+          heroku auth:token
+          heroku git:remote -a your-heroku-app-name  # Replace with your Heroku app name
+          # Push to Heroku
+          git push heroku main
