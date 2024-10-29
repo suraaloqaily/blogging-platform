@@ -39,13 +39,13 @@ const Custom404 = () => {
   }, [user]);
 
   if (!user) {
-    return <Loading/>;
+    return <Loading />;
   }
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>404 - Page Not Found</h1>
       <Link
-        href="/blogging-platform/homepage"
+        href="/homepage"
         style={styles.link}>
         Return to Home
       </Link>

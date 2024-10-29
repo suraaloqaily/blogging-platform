@@ -10,7 +10,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      router.push("/blogging-platform/homepage");
+      router.push("/homepage");
     }
   }, [user, router]);
 

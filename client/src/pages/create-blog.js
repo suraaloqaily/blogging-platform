@@ -26,7 +26,7 @@ const CreateBlog = () => {
         containerRef.current &&
         !containerRef.current.contains(event.target)
       ) {
-        router.push("/blogging-platform/homepage");
+        router.push("/homepage");
       }
     };
 
@@ -68,7 +68,7 @@ const CreateBlog = () => {
           withCredentials: true,
         }
       );
-      router.push("/blogging-platform/homepage");
+      router.push("/homepage");
     } catch (error) {
       console.error("Error creating blog:", error);
       setMessage({
@@ -83,7 +83,7 @@ const CreateBlog = () => {
       className={styles.createBlogContainer}
       ref={containerRef}>
       <button
-        onClick={() => router.push("/blogging-platform/homepage")}
+        onClick={() => router.push("/homepage")}
         className={styles.backButton}>
         <FaArrowLeft />
       </button>

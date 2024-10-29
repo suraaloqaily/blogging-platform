@@ -1,16 +1,13 @@
 {
   "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/[...slug]": "pages/[...slug].js",
-  "/404": "pages/404.js",
-  "/create-blog": "pages/create-blog.js",
-  "/blog/[id]": "pages/blog/[id].js",
-  "/edit-blog/[id]": "pages/edit-blog/[id].js",
-  "/": "pages/index.js",
-  "/homepage": "pages/homepage.js",
+  "/_document": "pages/_document.js",
   "/login": "pages/login.js",
-  "/profile": "pages/profile.js",
   "/register": "pages/register.js",
+  "/edit-blog/[id]": "pages/edit-blog/[id].js",
+  "/blog/[id]": "pages/blog/[id].js",
+  "/homepage": "pages/homepage.js",
+  "/create-blog": "pages/create-blog.js",
+  "/profile": "pages/profile.js",
   "/your-blogs": "pages/your-blogs.js"
 }

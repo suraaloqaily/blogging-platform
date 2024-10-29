@@ -21,12 +21,12 @@ export default function LoginForm() {
       <div className={styles.authWrapper}>
         <div className={styles.authNav}>
           <Link
-            href="/blogging-platform/login"
+            href="/login"
             className={styles.activeNav}>
             Login
           </Link>
           <Link
-            href="/blogging-platform/register"
+            href="/register"
             className={styles.inactiveNav}>
             Register
           </Link>

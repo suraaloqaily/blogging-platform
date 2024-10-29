@@ -1,14 +1,14 @@
 {
   "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
-    "id": 8996,
+    "id": "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app",
     "files": [
-      "static/chunks/996.ced25331b5964e1f.js"
+      "static/chunks/node_modules_next_dist_pages__app_js.js"
     ]
   },
   "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
-    "id": 3997,
+    "id": "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error",
     "files": [
-      "static/chunks/997.2a42e94e309ea655.js"
+      "static/chunks/node_modules_next_dist_pages__error_js.js"
     ]
   }
 }

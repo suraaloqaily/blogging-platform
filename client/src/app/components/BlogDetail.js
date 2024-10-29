@@ -27,7 +27,7 @@ const BlogDetail = ({ blogId }) => {
         setLikeCount(likeCount);
       } catch (error) {
         console.error("Error fetching data:", error);
-        router.push("/blogging-platform/404");
+        router.push("/404");
       } finally {
         setIsLoading(false);
       }
@@ -39,7 +39,7 @@ const BlogDetail = ({ blogId }) => {
   }, [blogId, router]);
 
   const handleClose = () => {
-    router.push("/blogging-platform/homepage");
+    router.push("/homepage");
   };
 
   const handleComment = async (e) => {

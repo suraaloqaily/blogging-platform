@@ -16,7 +16,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await logout();
-    router.push("/blogging-platform/login");
+    router.push("/login");
   };
 
   const toggleDropdown = () => {
@@ -33,7 +33,7 @@ const Navbar = () => {
       />
       <div className={styles.navLinks}>
         <button
-          onClick={() => router.push("/blogging-platform/create-blog")}
+          onClick={() => router.push("/create-blog")}
           className={styles.createBlogButton}>
           Create New Blog
         </button>
@@ -41,7 +41,7 @@ const Navbar = () => {
         {!user ? (
           <>
             <Link
-              href="/blogging-platform/login"
+              href="/login"
               className={styles.navLink}>
               Login
             </Link>

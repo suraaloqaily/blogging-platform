@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
           sameSite: "lax",
         });
         setUser(data.user);
-        router.push("/blogging-platform/homepage");
+        router.push("/homepage");
         return { success: true };
       }
       return { success: false, message: data.message };
