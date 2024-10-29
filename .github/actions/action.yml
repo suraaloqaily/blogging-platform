@@ -30,7 +30,7 @@ runs:
     - name: Set up Node.js for server
       uses: actions/setup-node@v2
       with:
-        node-version: "14"
+        node-version: "18.18.0"  # Updated to 18.18.0
 
     - name: Install server dependencies
       working-directory: server
