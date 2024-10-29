@@ -33,7 +33,7 @@ jobs:
           node-version: "18.18.0"
 
       - name: Install dependencies
-        working-directory: blogging-platform/server
+        working-directory: server
         run: npm install --legacy-peer-deps
 
       - name: Setup Pages ⚙️
@@ -42,7 +42,7 @@ jobs:
           static_site_generator: next
 
       - name: Build with Next.js 🏗️
-        working-directory: blogging-platform/server
+        working-directory: server
         run: npx next build
 
       - name: Upload artifact 📡
