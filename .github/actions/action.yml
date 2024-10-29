@@ -1,0 +1,49 @@
+name: "Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧"
+description: "Sets up Node.js, caches dependencies, and installs them."
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code with submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive  
+
+    - name: Log current directory
+      run: |
+        echo "Current directory: $(pwd)"
+        echo "Listing files:"
+        ls -la
+
+    - name: Set up Node.js for client
+      uses: actions/setup-node@v2
+      with:
+        node-version: "18.18.0"
+
+    - name: Log Node.js version for client
+      run: node -v
+
+    - name: Install client dependencies
+      working-directory: client
+      run: |
+        echo "Installing client dependencies in $(pwd)"
+        npm install --legacy-peer-deps
+
+    - name: Run client tests
+      working-directory: client
+      run: |
+        echo "Running client tests in $(pwd)..."
+        npx jest
+
+    - name: Set up Node.js for server
+      uses: actions/setup-node@v2
+      with:
+        node-version: "18.18.0"  # Updated to 18.18.0
+
+    - name: Log Node.js version for server
+      run: node -v
+
+    - name: Install server dependencies
+      working-directory: server
+      run: |
+        echo "Installing server dependencies in $(pwd)"
+        npm install --legacy-peer-deps

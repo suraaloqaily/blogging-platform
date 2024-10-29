@@ -28,6 +28,7 @@ jobs:
           ls -la
 
       - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
+
         uses: actions/setup-node@v2
         with:
           node-version: "18.18.0"
