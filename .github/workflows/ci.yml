@@ -21,6 +21,8 @@ jobs:
 
       - name: Install client dependencies
         run: |
+          pwd
+          ls -R
           cd client
           npm install
 
