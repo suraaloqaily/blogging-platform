@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-   basePath: "/blogging-platform",
+  output: "export",
+  basePath: "/blogging-platform",
   images: {
     unoptimized: true,
   },
