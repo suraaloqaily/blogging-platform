@@ -41,9 +41,9 @@ jobs:
         with:
           static_site_generator: next
 
-      - name: Build with Next.js 🏗️
-        working-directory: server
-        run: npx next build
+      # - name: Build with Next.js 🏗️
+      #   working-directory: server
+      #   run: npx next build
 
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3
