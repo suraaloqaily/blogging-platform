@@ -47,6 +47,8 @@ jobs:
 
       - name: Build with Next.js 🏗️
         working-directory: client
+        env:
+          NEXT_PUBLIC_SERVER_API_URL: ${{ secrets.NEXT_PUBLIC_SERVER_API_URL }}
         run: npx next build
 
       - name: Upload artifact 📡
