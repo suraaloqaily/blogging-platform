@@ -49,5 +49,3 @@ jobs:
           echo "Listing files:"
           Get-ChildItem -Force
           npm install --legacy-peer-deps
-
-     
