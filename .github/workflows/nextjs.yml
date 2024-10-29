@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -30,13 +30,13 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Build with Next.js
-        working-directory: client 
+        working-directory: client
         run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: client/out 
+          path: client/out
 
   deploy:
     environment:
