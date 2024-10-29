@@ -23,13 +23,13 @@ runs:
       run: node -v
 
     - name: Install client dependencies
-      working-directory: blogging-platform/client
+      working-directory: /client
       run: |
         echo "Installing client dependencies in $(pwd)"
         npm install --legacy-peer-deps
 
     - name: Run client tests
-      working-directory: blogging-platform/client
+      working-directory: /client
       run: |
         echo "Running client tests in $(pwd)..."
         npx jest
@@ -43,7 +43,8 @@ runs:
       run: node -v
 
     - name: Install server dependencies
-      working-directory: blogging-platform/server
+      working-directory: /server
       run: |
+       ls
         echo "Installing server dependencies in $(pwd)"
         npm install --legacy-peer-deps
