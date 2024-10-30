@@ -17,6 +17,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 const cookieOptions = {
+  acces-
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   sameSite: "None",
