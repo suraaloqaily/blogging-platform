@@ -17,7 +17,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 const cookieOptions = {
-  acces-
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   sameSite: "None",
@@ -31,8 +30,7 @@ app.use((err, req, res, next) => {
   console.error("Error:", err.stack);
   res.status(500).json({ message: "Something went wrong!" });
 });
-
-app.use("/auth", authRouter);
+ app.use("/auth", authRouter);
 app.use("/blogs", blogRouter);
 app.use("/user", userRouter);
 
