@@ -41,6 +41,15 @@ app.get("/", (req, res) => {
   console.log("Origin:", req.headers.origin);
   res.send("Welcome");
 });
+app.get("/test-db", async (req, res) => {
+  try {
+    await sequelize.authenticate();
+    res.send("Database connection successful!");
+  } catch (error) {
+    console.error("Database connection error:", error);
+    res.status(500).send("Database connection failed.");
+  }
+});
 
 const syncDatabase = async () => {
   try {
