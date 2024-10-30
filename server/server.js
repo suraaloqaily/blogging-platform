@@ -39,6 +39,7 @@ app.use("/blogs", blogRouter);
 app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
+  console.log("Headers:", req.headers);
   console.log("Origin:", req.headers.origin);
   res.send("Welcome");
 });
