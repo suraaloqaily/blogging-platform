@@ -59,7 +59,7 @@ const Navbar = () => {
                 onClick={toggleDropdown}
                 className={styles.profileButton}>
                 <Image
-                  src={user.profile_picture || avatar_icon.src || "/avatar.png"}
+                  src={user.profilePicture || avatar_icon.src || "/avatar.png"}
                   alt="Profile"
                   width={40}
                   height={40}

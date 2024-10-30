@@ -11,7 +11,7 @@ const Homepage = () => {
   const { blogs } = useBlogs();
   const router = useRouter();
   const [showUserBlogs, setShowUserBlogs] = useState(false);
-  const userBlogs = blogs.filter((blog) => blog.user_id === user?.id);
+  const userBlogs = blogs.filter((blog) => blog.userId === user?.id);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -38,7 +38,7 @@ const Homepage = () => {
               <Blog
                 key={blog.id}
                 data={blog}
-                isAuthor={blog.user_id === user.id}
+                isAuthor={blog.userId === user.id}
               />
             ))}
           </div>

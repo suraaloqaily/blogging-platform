@@ -14,7 +14,7 @@ const EditBlog = ({ blog }) => {
   const [content, setContent] = useState(blog.content);
 
   useEffect(() => {
-    if (blog && user && blog.user_id !== user.id) {
+    if (blog && user && blog.userId !== user.id) {
       router.push("/homepage");
     }
   }, [blog, user, router]);

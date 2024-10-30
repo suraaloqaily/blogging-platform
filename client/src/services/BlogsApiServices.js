@@ -89,7 +89,7 @@ class ApiService {
 
   async fetchBlogDetails(blogId) {
     try {
-      const blogRes = await fetch(`${this.baseUrl}/blog_id/${blogId}`, {
+      const blogRes = await fetch(`${this.baseUrl}/blogId/${blogId}`, {
         credentials: "include",
       });
 

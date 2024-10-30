@@ -19,7 +19,7 @@ const Profile = () => {
     profileImage: null,
   });
   const [previewUrl, setPreviewUrl] = useState(
-    user?.profile_picture || avatar_icon.src
+    user?.profilePicture || avatar_icon.src
   );
   const [message, setMessage] = useState({ text: "", type: "" });
   const fileInputRef = useRef(null);
@@ -212,7 +212,7 @@ const Profile = () => {
                     email: user?.email || "",
                     profileImage: null,
                   });
-                  setPreviewUrl(user?.profile_picture || avatar_icon.src);
+                  setPreviewUrl(user?.profilePicture || avatar_icon.src);
                 }}>
                 <FaTimes /> Cancel
               </button>

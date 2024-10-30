@@ -33,7 +33,7 @@ describe("Navbar Component", () => {
 
   test("navigates to create blog page on button click", () => {
     useAuth.mockReturnValue({
-      user: { name: "John Doe", profile_picture: "" },
+      user: { name: "John Doe", profilePicture: "" },
     });
 
     render(<Navbar />);

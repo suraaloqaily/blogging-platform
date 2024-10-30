@@ -47,7 +47,7 @@ const Blogs = () => {
           <Blog
             key={blog.id}
             data={blog}
-            isAuthor={blog.user_id === user?.id}
+            isAuthor={blog.userId === user?.id}
           />
         ))}
       </div>

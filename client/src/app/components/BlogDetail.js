@@ -92,8 +92,8 @@ const BlogDetail = ({ blogId }) => {
           <div className={styles.blogHeader}>
             <h1 className={styles.title}>{blog.title}</h1>
             <div className={styles.metadata}>
-              <span>By {blog.author_name}</span>
-              <span>{formatDateHelper(blog.created_at)}</span>
+              <span>By {blog.authorName}</span>
+              <span>{formatDateHelper(blog.createdAt)}</span>
             </div>
           </div>
 
@@ -139,10 +139,10 @@ const BlogDetail = ({ blogId }) => {
                   className={styles.comment}>
                   <div className={styles.commentHeader}>
                     <span className={styles.commentAuthor}>
-                      {comment.author_name}
+                      {comment.authorName}
                     </span>
                     <span className={styles.commentDate}>
-                      {formatDateHelper(comment.created_at)}
+                      {formatDateHelper(comment.createdAt)}
                     </span>
                   </div>
                   <p>{comment.content}</p>

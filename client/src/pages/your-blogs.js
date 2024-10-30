@@ -10,7 +10,7 @@ const YourBlogs = () => {
   const { user, logout } = useAuth();
 
   const router = useRouter();
-  const userBlogs = blogs.filter((blog) => blog.user_id === user?.id);
+  const userBlogs = blogs.filter((blog) => blog.userId === user?.id);
 
   useEffect(() => {
     if (!user) {
@@ -34,7 +34,7 @@ const YourBlogs = () => {
               <Blog
                 key={blog.id}
                 data={blog}
-                isAuthor={blog.user_id === user.id}
+                isAuthor={blog.userId === user.id}
               />
             ))}
           </div>

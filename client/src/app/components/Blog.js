@@ -97,13 +97,13 @@ const Blog = ({ data, isAuthor }) => {
           </div>
           <span className={styles.author}>
             <Image
-              src={data?.author_image || avatar_icon.src}
-              alt={data.author_name}
+              src={data?.authorImage || avatar_icon.src}
+              alt={data.authorName}
               className={styles.authorImage}
               width={50}
               height={50}
             />
-            By: {data.author_name}
+            By: {data.authorName}
           </span>
         </div>
 

@@ -31,8 +31,8 @@ describe("Blog Component", () => {
     id: "1",
     title: "Test Blog",
     content: "This is a test blog content.",
-    author_name: "John Doe",
-    author_image: "",
+    authorName: "John Doe",
+    authorImage: "",
     like_count: 0,
   };
 
