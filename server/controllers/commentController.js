@@ -2,11 +2,11 @@ const pool = require("../db");
 
 const createComment = async (req, res) => {
   try {
-    const { blog_id } = req.params;
+    const { blogId } = req.params;
     const { content } = req.body;
-    const user_id = req.user.id;
+    const userId = req.user.id;
 
-    if (!blog_id) {
+    if (!blogId) {
       return res.status(400).json({ error: "Blog ID is required" });
     }
 
@@ -15,21 +15,21 @@ const createComment = async (req, res) => {
     }
 
     const query = `
-      INSERT INTO "Comment" (blog_id, user_id, content, created_at)
+      INSERT INTO "Comment" (blogId, userId, content, createdAt)
       VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
       RETURNING *;
     `;
 
-    const values = [blog_id, user_id, content];
+    const values = [blogId, userId, content];
 
     const result = await pool.query(query, values);
     const newComment = result.rows[0];
 
     const commentWithAuthor = await pool.query(
       `
-      SELECT c.*, u.name as author_name
+      SELECT c.*, u.name as authorName
       FROM "Comment" c
-      JOIN "User" u ON c.user_id = u.id
+      JOIN "User" u ON c.userId = u.id
       WHERE c.id = $1
     `,
       [newComment.id]
@@ -46,20 +46,20 @@ const createComment = async (req, res) => {
 };
 const getBlogComments = async (req, res) => {
   try {
-    const { blog_id } = req.params;
+    const { blogId } = req.params;
 
     const query = `
       SELECT 
         c.*,
-        u.name as author_name,
+        u.name as authorName,
         u.email as author_email
       FROM "Comment" c
-      JOIN "User" u ON c.user_id = u.id
-      WHERE c.blog_id = $1
-      ORDER BY c.created_at DESC
+      JOIN "User" u ON c.userId = u.id
+      WHERE c.blogId = $1
+      ORDER BY c.createdAt DESC
     `;
 
-    const result = await pool.query(query, [blog_id]);
+    const result = await pool.query(query, [blogId]);
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching comments:", error);

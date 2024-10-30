@@ -18,11 +18,11 @@ const router = express.Router();
 
 router.get("/", authMiddleware, getBlogs);
 router.post("/:id/like", authMiddleware, likeBlog);
-router.post("/:blog_id/comments", authMiddleware, createComment);
-router.get("/:blog_id/comments", authMiddleware, getBlogComments);
+router.post("/:blogId/comments", authMiddleware, createComment);
+router.get("/:blogId/comments", authMiddleware, getBlogComments);
 router.get("/:id/check-like", authMiddleware, checkLike);
 router.get("/:id", authMiddleware, getBlogsByUserId);
-router.get("/blog_id/:id", authMiddleware, getBlogById);
+router.get("/blogId/:id", authMiddleware, getBlogById);
 router.put("/:id", authMiddleware, updateBlog);
 router.post("/", authMiddleware, createBlog);
 router.delete("/:id", authMiddleware, deleteBlog);

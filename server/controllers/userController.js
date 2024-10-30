@@ -26,8 +26,8 @@ const updateProfile = async (req, res) => {
     }
 
     const updateQuery = profileImage
-      ? 'UPDATE "User" SET name = $1, email = $2, profile_picture = $3, updated_at = NOW() WHERE id = $4 RETURNING *'
-      : 'UPDATE "User" SET name = $1, email = $2, updated_at = NOW() WHERE id = $3 RETURNING *';
+      ? 'UPDATE "User" SET name = $1, email = $2, profilePicture = $3, updatedAt = NOW() WHERE id = $4 RETURNING *'
+      : 'UPDATE "User" SET name = $1, email = $2, updatedAt = NOW() WHERE id = $3 RETURNING *';
 
     const updateValues = profileImage
       ? [name, email, profileImage, userId]
@@ -46,12 +46,12 @@ const updateProfile = async (req, res) => {
 
     const updateBlogsQuery = `
       UPDATE "Blog"
-      SET author_image = $1, author_name = $2
-      WHERE user_id = $3
+      SET authorImage = $1, authorName = $2
+      WHERE userId = $3
     `;
 
     await pool.query(updateBlogsQuery, [
-      updatedUser.profile_picture,
+      updatedUser.profilePicture,
       updatedUser.name,
       userId,
     ]);
@@ -64,7 +64,7 @@ const updateProfile = async (req, res) => {
         id: updatedUser.id,
         name: updatedUser.name,
         email: updatedUser.email,
-        profile_picture: updatedUser.profile_picture,
+        profilePicture: updatedUser.profilePicture,
       },
       token,
     });
