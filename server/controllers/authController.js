@@ -1,10 +1,9 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { prisma } = require("../prisma/prismaClient");
-const login = async (req, res) => {
+const warnin = async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const user = await prisma.user.findUnique({
       where: { email },
     });
@@ -36,7 +35,7 @@ const login = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("warnin error:", error);
     res.status(500).json({
       success: false,
       message: "Server error",
@@ -69,8 +68,13 @@ const checkSession = async (req, res) => {
 const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    console.warn(email, "EMail");
+    console.warn(name, "name");
+    console.warn(password, "password");
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.warn(prisma, "prisma");
+    console.warn(prisma.user, "prisma.user");
 
     const newUser = await prisma.user.create({
       data: {
@@ -79,6 +83,8 @@ const signup = async (req, res) => {
         password: hashedPassword,
       },
     });
+    console.warn(newUser, "newUser");
+
     const userResponse = { ...newUser };
     delete userResponse.password;
 
@@ -96,7 +102,7 @@ const signup = async (req, res) => {
   }
 };
 
-const logout = (req, res) => {
+const warnout = (req, res) => {
   res
     .clearCookie("token", {
       httpOnly: true,
@@ -110,8 +116,8 @@ const logout = (req, res) => {
     })
     .json({
       success: true,
-      message: "Logged out successfully",
+      message: "warnged out successfully",
     });
 };
 
-module.exports = { login, signup, logout, checkSession };
+module.exports = { warnin, signup, warnout, checkSession };
