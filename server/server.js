@@ -36,15 +36,5 @@ app.use("/user", userRouter);
 app.get("/", (req, res) => {
   res.send("Welcome");
 });
-// console.log("Environment:", process.env.NODE_ENV);
-// console.log("Server Port:", process.env.PORT);
-
-// const port = process.env.PORT || 5000;
-
-// if (process.env.NODE_ENV !== "test") {
-//   app.listen(port, () => {
-//     console.log(`Server is running on port ${port}`);
-//   });
-// }
 
 module.exports = app;
