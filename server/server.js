@@ -14,13 +14,16 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
   exposedHeaders: ["Set-Cookie"],
 };
-app.options("*", cors(corsOptions));
-app.use(cors(corsOptions));
+
+app.options("*", cors(corsOptions)); // Handle preflight requests
+app.use(cors(corsOptions)); // Apply CORS to all routes
+
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   sameSite: "None",
 };
+
 app.use(cookieParser(cookieOptions));
 
 app.use(express.json({ limit: "50mb" }));
@@ -30,9 +33,11 @@ app.use((err, req, res, next) => {
   console.error("Error:", err.stack);
   res.status(500).json({ message: "Something went wrong!" });
 });
+
 app.use("/auth", authRouter);
 app.use("/blogs", blogRouter);
 app.use("/user", userRouter);
+
 app.get("/", (req, res) => {
   console.log("Origin:", req.headers.origin);
   res.send("Welcome");
