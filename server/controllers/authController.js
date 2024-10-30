@@ -4,7 +4,7 @@ const {
   getUserByEmail,
   createUser,
   getUserById,
-} = require("../models/userModel");
+} = require("../controllers/userModel");
 
 const login = async (req, res) => {
   try {
