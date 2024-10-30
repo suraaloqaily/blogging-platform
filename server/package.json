@@ -6,13 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
-    "dev": "nodemon server",
-    "postinstall": "prisma generate"
+    "dev": "nodemon server"
   },
   "author": "Sora Aqaily",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.21.1",
+    "prisma": "^5.21.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -25,6 +25,7 @@
     "pg": "^8.13.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "prisma": "^5.21.1"
   }
 }
