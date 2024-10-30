@@ -30,9 +30,9 @@ app.use((err, req, res, next) => {
   console.error("Error:", err.stack);
   res.status(500).json({ message: "Something went wrong!" });
 });
-app.use("/server/auth", authRouter);
-app.use("/server/blogs", blogRouter);
-app.use("/server/user", userRouter);
+app.use("/auth", authRouter);
+app.use("/blogs", blogRouter);
+app.use("/user", userRouter);
 app.get("/", (req, res) => {
   res.send("Welcome");
 });
