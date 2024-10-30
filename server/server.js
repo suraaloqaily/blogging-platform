@@ -30,10 +30,12 @@ app.use((err, req, res, next) => {
   console.error("Error:", err.stack);
   res.status(500).json({ message: "Something went wrong!" });
 });
- app.use("/auth", authRouter);
+app.use("/auth", authRouter);
 app.use("/blogs", blogRouter);
 app.use("/user", userRouter);
-
+app.get("/", (req, res) => {
+  res.send("Welcome");
+});
 // console.log("Environment:", process.env.NODE_ENV);
 // console.log("Server Port:", process.env.PORT);
 
