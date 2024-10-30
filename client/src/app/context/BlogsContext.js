@@ -13,7 +13,7 @@ export const BlogsProvider = ({ children }) => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
         {
-          credentials: "include",
+          credentials: "true",
         }
       );
       if (response.ok) {
@@ -43,7 +43,7 @@ export const BlogsProvider = ({ children }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
+          credentials: "true",
           body: JSON.stringify(blogData),
         }
       );
@@ -79,7 +79,7 @@ export const BlogsProvider = ({ children }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
+          credentials: "true",
           body: JSON.stringify(blogData),
         }
       );
@@ -101,7 +101,7 @@ export const BlogsProvider = ({ children }) => {
         `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs/${id}`,
         {
           method: "DELETE",
-          credentials: "include",
+          credentials: "true",
         }
       );
 
