@@ -1,4 +1,4 @@
-const { prisma } = require("../prisma/prismaClient");
+const pool = require("../db");
 
 const createComment = async (req, res) => {
   try {
@@ -14,29 +14,28 @@ const createComment = async (req, res) => {
       return res.status(400).json({ error: "Comment content is required" });
     }
 
-    const newComment = await prisma.comment.create({
-      data: {
-        blogId: parseInt(blog_id),
-        userId: user_id,
-        content,
-      },
-    });
+    const query = `
+      INSERT INTO "Comment" (blog_id, user_id, content, created_at)
+      VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+      RETURNING *;
+    `;
 
-    const commentWithAuthor = await prisma.comment.findUnique({
-      where: { id: newComment.id },
-      include: {
-        user: {
-          select: {
-            name: true,
-          },
-        },
-      },
-    });
+    const values = [blog_id, user_id, content];
 
-    return res.status(201).json({
-      ...commentWithAuthor,
-      author_name: commentWithAuthor.user.name,  
-    });
+    const result = await pool.query(query, values);
+    const newComment = result.rows[0];
+
+    const commentWithAuthor = await pool.query(
+      `
+      SELECT c.*, u.name as author_name
+      FROM "Comment" c
+      JOIN "User" u ON c.user_id = u.id
+      WHERE c.id = $1
+    `,
+      [newComment.id]
+    );
+
+    return res.status(201).json(commentWithAuthor.rows[0]);
   } catch (error) {
     console.error("Error creating comment:", error);
     return res.status(500).json({
@@ -45,39 +44,28 @@ const createComment = async (req, res) => {
     });
   }
 };
-
 const getBlogComments = async (req, res) => {
   try {
     const { blog_id } = req.params;
 
-     const comments = await prisma.comment.findMany({
-      where: { blogId: parseInt(blog_id) },  
-      include: {
-        user: {
-          select: {
-            name: true,
-            email: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    const query = `
+      SELECT 
+        c.*,
+        u.name as author_name,
+        u.email as author_email
+      FROM "Comment" c
+      JOIN "User" u ON c.user_id = u.id
+      WHERE c.blog_id = $1
+      ORDER BY c.created_at DESC
+    `;
 
-     const commentsWithAuthors = comments.map((comment) => ({
-      ...comment,
-      author_name: comment.user.name,
-      author_email: comment.user.email,
-    }));
-
-    res.json(commentsWithAuthors);
+    const result = await pool.query(query, [blog_id]);
+    res.json(result.rows);
   } catch (error) {
     console.error("Error fetching comments:", error);
     res.status(500).json({ error: "Failed to fetch comments" });
   }
 };
-
 module.exports = {
   createComment,
   getBlogComments,
