@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "./AuthContext";
 const BlogsContext = createContext();
+import { parseCookies } from "nookies";
 
 export const BlogsProvider = ({ children }) => {
   const [blogs, setBlogs] = useState([]);
@@ -10,9 +11,14 @@ export const BlogsProvider = ({ children }) => {
 
   const fetchBlogs = async () => {
     try {
+      const cookies = parseCookies();
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
         {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
           credentials: "include",
         }
       );
@@ -37,13 +43,16 @@ export const BlogsProvider = ({ children }) => {
 
   const createBlog = async (blogData) => {
     try {
+      const cookies = parseCookies();
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
           },
+          credentials: "include",
           body: JSON.stringify(blogData),
           credentials: "include",
         }
@@ -76,12 +85,14 @@ export const BlogsProvider = ({ children }) => {
   };
   const updateBlog = async (id, blogData) => {
     try {
+      const cookies = parseCookies();
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs/${id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
           },
           credentials: "include",
           body: JSON.stringify(blogData),
@@ -100,11 +111,16 @@ export const BlogsProvider = ({ children }) => {
   };
 
   const deleteBlog = async (id) => {
+    const cookies = parseCookies();
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs/${id}`,
         {
           method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
           credentials: "include",
         }
       );
