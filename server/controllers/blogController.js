@@ -1,4 +1,4 @@
-const prisma  = require("../prisma/prismaClient");
+const prisma = require("../prisma/prismaClient");
 
 const createBlog = async (req, res) => {
   try {
@@ -60,8 +60,13 @@ const getBlogs = async (req, res) => {
 const getBlogsByUserId = async (req, res) => {
   try {
     const { id } = req.params;
+    const blogId = parseInt(id, 10);
+
+    if (isNaN(blogId)) {
+      return res.status(400).json({ error: "Invalid blog ID" });
+    }
     const blogs = await prisma.blog.findMany({
-      where: { userId: id },
+      where: { userId: blogId },
       include: {
         user: {
           select: { name: true },
@@ -80,9 +85,13 @@ const deleteBlog = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user.id;
+    const blogId = parseInt(id, 10);
 
+    if (isNaN(blogId)) {
+      return res.status(400).json({ error: "Invalid blog ID" });
+    }
     const blog = await prisma.blog.findUnique({
-      where: { id },
+      where: { blogId },
       select: { userId: true },
     });
 
@@ -96,7 +105,7 @@ const deleteBlog = async (req, res) => {
         .json({ message: "Unauthorized to delete this blog" });
     }
 
-    await prisma.blog.delete({ where: { id } });
+    await prisma.blog.delete({ where: { blogId } });
 
     res.json({ message: "Blog deleted successfully" });
   } catch (error) {
@@ -108,9 +117,13 @@ const deleteBlog = async (req, res) => {
 const getBlogById = async (req, res) => {
   try {
     const { id } = req.params;
+    const blogId = parseInt(id, 10);
 
+    if (isNaN(blogId)) {
+      return res.status(400).json({ error: "Invalid blog ID" });
+    }
     const blog = await prisma.blog.findUnique({
-      where: { id },
+      where: { blogId },
       include: {
         user: {
           select: { name: true },
