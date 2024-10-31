@@ -5,13 +5,22 @@ import styles from "@/styles/Profile.module.css";
 import { FaCamera, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
 import avatar_icon from "@/pages/Assets/profile-avatar.png";
 import Loading from "@/app/components/Loading";
-import Image from "next/image";
 
 const Profile = () => {
   const { user, updateUser } = useAuth();
   const containerRef = useRef(null);
+
   const router = useRouter();
 
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [user, router]);
+
+  if (!user) {
+    return <Loading />;
+  }
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -19,16 +28,15 @@ const Profile = () => {
     profileImage: null,
   });
   const [previewUrl, setPreviewUrl] = useState(
-    user?.profilePicture || avatar_icon.src
+    user?.profile_picture || avatar_icon.src
   );
   const [message, setMessage] = useState({ text: "", type: "" });
-  const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    if (!user) {
-      router.replace("/login");
-    }
-  }, [user, router]);
+  const fileInputRef = React.useRef(null);
+
+  const handleImageClick = () => {
+    fileInputRef.current.click();
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -84,15 +92,18 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    if (message.text) {
+      const timer = setTimeout(() => setMessage({ text: "", type: "" }), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [handleClickOutside]);
-
-  if (!user) {
-    return <Loading />;
-  }
+  }, []);
 
   return (
     <div className={styles.profileContainer}>
@@ -128,12 +139,10 @@ const Profile = () => {
         <form onSubmit={handleSubmit}>
           <div className={styles.avatarSection}>
             <div className={styles.avatarWrapper}>
-              <Image
+              <img
                 src={previewUrl}
                 alt=""
                 className={styles.avatar}
-                width={50}
-                height={50}
               />
               {isEditing && (
                 <>
@@ -212,7 +221,7 @@ const Profile = () => {
                     email: user?.email || "",
                     profileImage: null,
                   });
-                  setPreviewUrl(user?.profilePicture || avatar_icon.src);
+                  setPreviewUrl(user?.profile_picture || avatar_icon.src);
                 }}>
                 <FaTimes /> Cancel
               </button>

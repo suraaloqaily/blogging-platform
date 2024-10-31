@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { FaArrowLeft } from "react-icons/fa";
 import styles from "@/styles/CreateBlog.module.css";
 import { useAuth } from "@/app/context/AuthContext";
+import { useBlogs } from "@/app/context/BlogsContext"; // Import the BlogsContext
 import Loading from "@/app/components/Loading";
 
 const CreateBlog = () => {
@@ -13,6 +13,7 @@ const CreateBlog = () => {
   const router = useRouter();
   const containerRef = useRef(null);
   const { user } = useAuth();
+  const { createBlog } = useBlogs();  
 
   useEffect(() => {
     if (!user) {
@@ -35,21 +36,24 @@ const CreateBlog = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [router]);
+
   useEffect(() => {
     if (message.text) {
       const timer = setTimeout(() => setMessage({ text: "", type: "" }), 2000);
       return () => clearTimeout(timer);
     }
   }, [message]);
+
   if (!user) {
     return <Loading />;
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage({ text: "", type: "" });
 
     if (!title.trim()) {
-      setMessage({ text: "Title cannot be empty", type: "error" });
+      setMessage({ text: "Title cannot be empty ", type: "error" });
       return;
     }
     if (!content.trim()) {
@@ -58,17 +62,15 @@ const CreateBlog = () => {
     }
 
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
-        {
-          title,
-          content,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      router.push("/homepage");
+      const result = await createBlog({ title, content }); // Use createBlog from context
+      if (result.success) {
+        router.push("/homepage");
+      } else {
+        setMessage({
+          text: "An error occurred while creating the blog.",
+          type: "error",
+        });
+      }
     } catch (error) {
       console.error("Error creating blog:", error);
       setMessage({

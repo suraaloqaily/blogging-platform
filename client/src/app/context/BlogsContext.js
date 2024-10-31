@@ -7,7 +7,7 @@ export const BlogsProvider = ({ children }) => {
   const [blogs, setBlogs] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
-
+ 
   const fetchBlogs = async () => {
     try {
       const response = await fetch(
@@ -121,6 +121,7 @@ export const BlogsProvider = ({ children }) => {
       );
     });
   };
+
   return (
     <BlogsContext.Provider
       value={{
