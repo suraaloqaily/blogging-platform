@@ -4,6 +4,7 @@ const cors = require("cors");
 const authRouter = require("./routes/authRouter");
 const blogRouter = require("./routes/blogRouter");
 const userRouter = require("./routes/userRouter");
+require("dotenv").config();
 const app = express();
 
 const corsOptions = {
