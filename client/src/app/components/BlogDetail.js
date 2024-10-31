@@ -142,7 +142,7 @@ const BlogDetail = ({ blogId }) => {
                   className={styles.comment}>
                   <div className={styles.commentHeader}>
                     <span className={styles.commentAuthor}>
-                      {comment.authorName}
+                      {comment.author_name}
                     </span>
                     <span className={styles.commentDate}>
                       {comment?.createdAt
