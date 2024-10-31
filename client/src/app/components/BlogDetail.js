@@ -47,7 +47,7 @@ const BlogDetail = ({ blogId }) => {
     if (!commentText.trim()) return;
 
     try {
-      const newComment = await apiService.addComment( blogId, commentText );
+      const newComment = await apiService.addComment(blogId, commentText);
       console.log("New comment Added", newComment);
       setComments((prevComments) => [...prevComments, newComment]);
       setCommentText("");
@@ -79,7 +79,7 @@ const BlogDetail = ({ blogId }) => {
       </div>
     );
   }
-  console.warn(blog, "BLOG")
+  console.warn(blog, "BLOG");
 
   return (
     <div className="blog-detail-page">
@@ -144,7 +144,9 @@ const BlogDetail = ({ blogId }) => {
                       {comment.authorName}
                     </span>
                     <span className={styles.commentDate}>
-                      {formatDateHelper(comment.createdAt)}
+                      {comment?.createdAt
+                        ? formatDateHelper(comment.createdAt)
+                        : "00:00"}
                     </span>
                   </div>
                   <p>{comment.content}</p>
