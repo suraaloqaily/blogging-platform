@@ -1,28 +1,31 @@
-const pool = require("../db");
+const { prisma } = require("../prisma/prismaClient");
 
 const createBlog = async (req, res) => {
   try {
     const { title, content } = req.body;
     const userId = req.user.id;
 
-    const userQuery = await pool.query(
-      'SELECT name, "profilePicture" FROM "User" WHERE id = $1',
-      [userId]
-    );
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { name: true, profilePicture: true },
+    });
 
-    if (userQuery.rows.length === 0) {
+    if (!user) {
       return res.status(404).json({ message: "User  not found" });
     }
 
-    const userName = userQuery.rows[0].name;
-    const userProfilePicture = userQuery.rows[0].profilePicture;
+    const newBlog = await prisma.blog.create({
+      data: {
+        userId,
+        title,
+        content,
+        authorName: user.name,
+        authorImage: user.profilePicture,
+        createdAt: new Date(),
+      },
+    });
 
-    const newBlog = await pool.query(
-      'INSERT INTO "Blog"("userId", title, content, "authorName", "authorImage", "createdAt") VALUES($1, $2, $3, $4, $5, NOW()) RETURNING *',
-      [userId, title, content, userName, userProfilePicture]
-    );
-
-    res.json(newBlog.rows[0]);
+    res.json(newBlog);
   } catch (error) {
     console.error("Error creating blog:", error);
     res.status(500).json({ message: "Server error while creating blog" });
@@ -31,13 +34,23 @@ const createBlog = async (req, res) => {
 
 const getBlogs = async (req, res) => {
   try {
-    const blogs = await pool.query(`
-      SELECT b.*, u.name as "authorName",
-      (SELECT COUNT(*) FROM "Like" WHERE "blogId" = b.id) as like_count
-      FROM "Blog" b 
-      JOIN "User" u ON b."userId" = u.id
-    `);
-    res.json(blogs.rows);
+    const blogs = await prisma.blog.findMany({
+      include: {
+        user: {
+          select: { name: true },
+        },
+        _count: {
+          select: { likes: true },
+        },
+      },
+    });
+
+    res.json(
+      blogs.map((blog) => ({
+        ...blog,
+        like_count: blog._count.likes,
+      }))
+    );
   } catch (error) {
     console.error("Error fetching blogs:", error);
     res.status(500).json({ message: "Server error while fetching blogs" });
@@ -47,11 +60,16 @@ const getBlogs = async (req, res) => {
 const getBlogsByUserId = async (req, res) => {
   try {
     const { id } = req.params;
-    const blogs = await pool.query(
-      'SELECT b.*, u.name as "authorName" FROM "Blog" b JOIN "User" u ON b."userId" = u.id WHERE b."userId" = $1',
-      [id]
-    );
-    res.json(blogs.rows);
+    const blogs = await prisma.blog.findMany({
+      where: { userId: id },
+      include: {
+        user: {
+          select: { name: true },
+        },
+      },
+    });
+
+    res.json(blogs);
   } catch (error) {
     console.error("Error fetching user blogs:", error);
     res.status(500).json({ message: "Server error while fetching user blogs" });
@@ -63,22 +81,22 @@ const deleteBlog = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;
 
-    const blogCheck = await pool.query(
-      'SELECT "userId" FROM "Blog" WHERE id = $1',
-      [id]
-    );
+    const blog = await prisma.blog.findUnique({
+      where: { id },
+      select: { userId: true },
+    });
 
-    if (blogCheck.rows.length === 0) {
+    if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    if (blogCheck.rows[0].userId !== userId) {
+    if (blog.userId !== userId) {
       return res
         .status(403)
         .json({ message: "Unauthorized to delete this blog" });
     }
 
-    await pool.query('DELETE FROM "Blog" WHERE id = $1', [id]);
+    await prisma.blog.delete({ where: { id } });
 
     res.json({ message: "Blog deleted successfully" });
   } catch (error) {
@@ -86,143 +104,143 @@ const deleteBlog = async (req, res) => {
     res.status(500).json({ message: "Server error while deleting blog" });
   }
 };
+
 const getBlogById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const query = `
-      SELECT b.*, u.name as "authorName" 
-      FROM "Blog" b 
-      JOIN "User" u ON b."userId" = u.id 
-      WHERE b.id = $1
-    `;
+    const blog = await prisma.blog.findUnique({
+      where: { id },
+      include: {
+        user: {
+          select: { name: true },
+        },
+      },
+    });
 
-    const result = await pool.query(query, [id]);
-
-    if (result.rows.length === 0) {
+    if (!blog) {
       return res.status(404).json({ error: "Blog not found" });
     }
 
-    res.json(result.rows[0]);
+    res.json(blog);
   } catch (error) {
     console.error("Error fetching blog:", error);
     res.status(500).json({ error: "Server error" });
   }
 };
+
 const updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, content } = req.body;
     const userId = req.user.id;
 
-    const blogCheck = await pool.query(
-      'SELECT "userId" FROM "Blog" WHERE id = $1',
-      [id]
-    );
+    const blog = await prisma.blog.findUnique({
+      where: { id },
+      select: { userId: true },
+    });
 
-    if (blogCheck.rows.length === 0) {
+    if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    if (blogCheck.rows[0].userId !== userId) {
+    if (blog.userId !== userId) {
       return res
         .status(403)
         .json({ message: "Unauthorized to update this blog" });
     }
 
-    const userQuery = await pool.query(
-      'SELECT name FROM "User" WHERE id = $1',
-      [userId]
-    );
-    const userName = userQuery.rows[0].name;
+    const updatedBlog = await prisma.blog.update({
+      where: { id },
+      data: {
+        title,
+        content,
+        updatedAt: new Date(),
+      },
+    });
 
-    const updatedBlog = await pool.query(
-      'UPDATE "Blog" SET title = $1, content = $2, "authorName" = $3, "updatedAt" = NOW() WHERE id = $4 RETURNING *',
-      [title, content, userName, id]
-    );
-
-    res.json(updatedBlog.rows[0]);
+    res.json(updatedBlog);
   } catch (error) {
     console.error("Error updating blog:", error);
     res.status(500).json({ message: "Server error while updating blog" });
   }
 };
+
 const likeBlog = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user.id;
-    const existingLike = await pool.query(
-      'SELECT * FROM "Like" WHERE "blogId" = $1 AND "userId" = $2',
-      [id, userId]
-    );
 
-    if (existingLike.rows.length > 0) {
-      await pool.query('DELETE FROM "Like" WHERE "blogId" = $1 AND "userId" = $2', [
-        id,
-        userId,
-      ]);
+    const blog = await prisma.blog.findUnique({
+      where: { id },
+    });
 
-      const likeCount = await pool.query(
-        'SELECT COUNT(*) FROM "Like" WHERE "blogId" = $1',
-        [id]
-      );
-
-      return res.json({
-        liked: false,
-        likeCount: parseInt(likeCount.rows[0].count),
-      });
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
     }
 
-    await pool.query(
-      'INSERT INTO "Like"("blogId", "userId","createdAt") VALUES($1, $2, NOW())',
-      [id, userId]
-    );
-
-    const likeCount = await pool.query(
-      'SELECT COUNT(*) FROM "Like" WHERE "blogId" = $1',
-      [id]
-    );
-
-    res.json({
-      liked: true,
-      likeCount: parseInt(likeCount.rows[0].count),
+    const existingLike = await prisma.like.findUnique({
+      where: {
+        userId_blogId: {
+          userId,
+          blogId: id,
+        },
+      },
     });
+
+    if (existingLike) {
+      await prisma.like.delete({
+        where: {
+          userId_blogId: {
+            userId,
+            blogId: id,
+          },
+        },
+      });
+      return res.json({ message: "Like removed" });
+    } else {
+      await prisma.like.create({
+        data: {
+          userId,
+          blogId: id,
+        },
+      });
+      return res.json({ message: "Blog liked" });
+    }
   } catch (error) {
-    console.error("Error handling blog like:", error);
-    res.status(500).json({ message: "Server error while handling like" });
+    console.error("Error liking blog:", error);
+    res.status(500).json({ message: "Server error while liking blog" });
   }
 };
+
 const checkLike = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user.id;
 
-    const existingLike = await pool.query(
-      'SELECT * FROM "Like" WHERE "blogId" = $1 AND "userId" = $2',
-      [id, userId]
-    );
-    const likesCount = await pool.query(
-      'SELECT * FROM "Like" WHERE "blogId" = $1',
-      [id]
-    );
-    res.json({
-      liked: existingLike.rows.length > 0,
-      like_count: likesCount.rowCount,
+    const existingLike = await prisma.like.findUnique({
+      where: {
+        userId_blogId: {
+          userId,
+          blogId: id,
+        },
+      },
     });
+
+    res.json({ liked: !!existingLike });
   } catch (error) {
-    console.error("Error checking like status:", error);
-    res
-      .status(500)
-      .json({ message: "Server error while checking like status" });
+    console.error("Error checking like:", error);
+    res.status(500).json({ message: "Server error while checking like" });
   }
 };
+
 module.exports = {
   createBlog,
   getBlogs,
-  deleteBlog,
   getBlogsByUserId,
+  deleteBlog,
+  getBlogById,
   updateBlog,
   likeBlog,
   checkLike,
-  getBlogById,
 };

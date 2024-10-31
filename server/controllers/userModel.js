@@ -1,39 +1,44 @@
-const pool = require("../db");
+const { prisma } = require("../prisma/prismaClient");
 
 const getUserByEmail = async (email) => {
   try {
-    console.log("EMAIL");
-    const result = await pool.query('SELECT * FROM "User" WHERE email = $1', [
-      email,
-    ]);
-    return result;
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+    return user;
   } catch (error) {
-    console.error("Error in getUserByEmail:", error);
+    console.error("Error in getUser ByEmail:", error);
     throw error;
   }
 };
-const createUser = async (name, email, hashedPassword) => {
-  try {
-    const result = await pool.query(
-      'INSERT INTO "User"(name, email, password, "createdAt") VALUES ($1, $2, $3, NOW()) RETURNING *',
-      [name, email, hashedPassword]
-    );
 
-    return result;
+const createUser  = async (name, email, hashedPassword) => {
+  try {
+    const newUser  = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        createdAt: new Date(),
+      },
+    });
+    return newUser ;
   } catch (error) {
     console.error("Error creating user:", error);
     throw error;
   }
 };
+
 const getUserById = async (userId) => {
   try {
-    const result = await pool.query('SELECT * FROM "User" WHERE id = $1', [
-      userId,
-    ]);
-    return result.rows[0];
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    return user;
   } catch (error) {
-    console.error("Error in getUserById:", error);
+    console.error("Error in getUser ById:", error);
     throw error;
   }
 };
-module.exports = { getUserByEmail, createUser, getUserById };
+
+module.exports = { getUserByEmail, createUser , getUserById };

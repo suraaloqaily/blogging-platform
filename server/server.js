@@ -4,7 +4,6 @@ const cors = require("cors");
 const authRouter = require("./routes/authRouter");
 const blogRouter = require("./routes/blogRouter");
 const userRouter = require("./routes/userRouter");
-
 const app = express();
 
 const corsOptions = {
