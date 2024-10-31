@@ -91,7 +91,7 @@ const deleteBlog = async (req, res) => {
       return res.status(400).json({ error: "Invalid blog ID" });
     }
     const blog = await prisma.blog.findUnique({
-      where: { id: blogId }, // Changed blogId to id
+      where: { id: blogId },
       select: { userId: true },
     });
 
@@ -124,7 +124,7 @@ const getBlogById = async (req, res) => {
     }
 
     const blog = await prisma.blog.findUnique({
-      where: { id: blogId }, // Changed blogId to id
+      where: { id: blogId },
       include: {
         user: {
           select: { name: true },
@@ -187,7 +187,7 @@ const updateBlog = async (req, res) => {
 const likeBlog = async (req, res) => {
   console.log("Request parameters Like Blog:", req.params);
   try {
-    const { id } = req.params;
+    const { id } = req.params.id;
     const userId = req.user.id;
     const blogId = parseInt(id, 10);
 

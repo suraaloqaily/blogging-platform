@@ -5,6 +5,7 @@ const createComment = async (req, res) => {
     console.log("Request parameters createComment:", req.params);
     const { blog_id } = req.params;
     const { content } = req.body;
+    console.log(content, "CONTENT OF COMMENT");
     const user_id = req.user.id;
 
     if (!blog_id) {
