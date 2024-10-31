@@ -104,8 +104,7 @@ class ApiService {
         credentials: "include",
         body: JSON.stringify({ content: commentText }),
       });
-      console.log(response.json(), "COMMENT");
-      if (!response.ok) throw new Error("Failed to add comment");
+       if (!response.ok) throw new Error("Failed to add comment");
       return response.json();
     } catch (error) {
       return {

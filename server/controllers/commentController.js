@@ -2,7 +2,7 @@ const prisma = require("../prisma/prismaClient");
 
 const createComment = async (req, res) => {
   try {
-    console.log("Request parameters createComment:", req.params);
+    console.log("Request parameters createComment:", req.body);
     const { blog_id } = req.params;
     const { content } = req.body;
     console.log(content, "CONTENT OF COMMENT");
@@ -20,7 +20,7 @@ const createComment = async (req, res) => {
       data: {
         blogId: parseInt(blog_id),
         userId: user_id,
-        content,
+        content: content,
       },
     });
 
