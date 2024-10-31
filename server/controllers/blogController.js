@@ -217,12 +217,12 @@ const likeBlog = async (req, res) => {
     if (existingLike) {
       await prisma.like.delete({ where: { id: existingLike.id } });
       updatedLikeCount = await prisma.like.count({ where: { blogId } });
-      console.log(updatedLikeCount, "updatedLikeCount delet");
+      console.warn(updatedLikeCount, "updatedLikeCount delet");
       return res.json({ liked: false, likeCount: updatedLikeCount });
     } else {
       await prisma.like.create({ data: { userId, blogId } });
       updatedLikeCount = await prisma.like.count({ where: { blogId } });
-      console.log(updatedLikeCount, "updatedLikeCount creat");
+      console.warn(updatedLikeCount, "updatedLikeCount creat");
 
       return res.json({ liked: true, likeCount: updatedLikeCount });
     }
@@ -232,7 +232,7 @@ const likeBlog = async (req, res) => {
   }
 };
 const checkLike = async (req, res) => {
-  console.log("Request parameters check blog:", req.params);
+  console.warn("Request parameters check blog:", req.params);
   try {
     const { id } = req.params;
     const userId = req.user.id;
