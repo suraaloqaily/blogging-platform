@@ -195,31 +195,29 @@ const likeBlog = async (req, res) => {
     }
 
     const blog = await getBlogById(blogId);
-
     if (!blog) {
       return res.status(404).json({ message: "Blog not found." });
     }
 
-    const existingLike = await prisma.like.findUnique({
+    const existingLike = await prisma.like.findFirst({
       where: {
-        userId,
-        blogId,
+        userId: userId,
+        blogId: blogId,
       },
     });
 
     if (existingLike) {
       await prisma.like.delete({
         where: {
-          userId,
-          blogId,
+          id: existingLike.id,
         },
       });
       return res.json({ message: "Like removed." });
     } else {
       await prisma.like.create({
         data: {
-          userId,
-          blogId,
+          userId: userId,
+          blogId: blogId,
         },
       });
       return res.json({ message: "Blog liked." });
@@ -235,15 +233,14 @@ const checkLike = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;
     const blogId = parseInt(id, 10);
-
     if (isNaN(blogId)) {
       return res.status(400).json({ error: "Invalid blog ID." });
     }
 
-    const existingLike = await prisma.like.findUnique({
+    const existingLike = await prisma.like.findFirst({
       where: {
-        userId,
-        blogId,
+        userId: userId,
+        blogId: blogId,
       },
     });
 
