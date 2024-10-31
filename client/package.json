@@ -2,12 +2,11 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://suraaloqaily.github.io/blogging-platform",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-     "lint": "next lint",
+    "lint": "next lint",
     "test": "jest",
     "deploy": "gh-pages -d out"
   },
