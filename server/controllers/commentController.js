@@ -21,6 +21,7 @@ const createComment = async (req, res) => {
         blogId: parseInt(blog_id),
         userId: user_id,
         content: content,
+        createdAt: new Date(),
       },
     });
 

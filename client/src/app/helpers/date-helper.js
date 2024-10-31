@@ -1,7 +1,6 @@
 import { format, parseISO } from "date-fns";
 
 const formatDateHelper = (timeString) => {
-  timeString = toString(timeString);
   if (!timeString) {
     console.warn("Time string is undefined or empty");
     return "Invalid time";
