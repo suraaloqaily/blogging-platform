@@ -147,9 +147,13 @@ const updateBlog = async (req, res) => {
     const { id } = req.params;
     const { title, content } = req.body;
     const userId = req.user.id;
+    const blogId = parseInt(id, 10);
 
+    if (isNaN(blogId)) {
+      return res.status(400).json({ error: "Invalid blog ID" });
+    }
     const blog = await prisma.blog.findUnique({
-      where: { id },
+      where: { blogId },
       select: { userId: true },
     });
 
@@ -164,7 +168,7 @@ const updateBlog = async (req, res) => {
     }
 
     const updatedBlog = await prisma.blog.update({
-      where: { id },
+      where: { blogId },
       data: {
         title,
         content,
@@ -183,9 +187,13 @@ const likeBlog = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user.id;
+    const blogId = parseInt(id, 10);
 
+    if (isNaN(blogId)) {
+      return res.status(400).json({ error: "Invalid blog ID" });
+    }
     const blog = await prisma.blog.findUnique({
-      where: { id },
+      where: { blogId },
     });
 
     if (!blog) {
@@ -196,7 +204,7 @@ const likeBlog = async (req, res) => {
       where: {
         userId_blogId: {
           userId,
-          blogId: id,
+          blogId: blogId,
         },
       },
     });
@@ -206,7 +214,7 @@ const likeBlog = async (req, res) => {
         where: {
           userId_blogId: {
             userId,
-            blogId: id,
+            blogId: blogId,
           },
         },
       });
@@ -215,7 +223,7 @@ const likeBlog = async (req, res) => {
       await prisma.like.create({
         data: {
           userId,
-          blogId: id,
+          blogId: blogId,
         },
       });
       return res.json({ message: "Blog liked" });
@@ -230,12 +238,16 @@ const checkLike = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user.id;
+    const blogId = parseInt(id, 10);
 
+    if (isNaN(blogId)) {
+      return res.status(400).json({ error: "Invalid blog ID" });
+    }
     const existingLike = await prisma.like.findUnique({
       where: {
         userId_blogId: {
           userId,
-          blogId: id,
+          blogId: blogId,
         },
       },
     });
