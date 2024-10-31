@@ -94,7 +94,13 @@ class ApiService {
   async addComment(blogId, commentText) {
     try {
       const cookies = parseCookies();
-
+      if (!commentText || !blogId) {
+        console.error("Comment text or blog ID is missing.");
+        return {
+          success: false,
+          message: "Comment content and blog ID are required.",
+        };
+      }
       const response = await fetch(`${this.baseUrl}/${blogId}/comments`, {
         method: "POST",
         headers: {
@@ -104,9 +110,10 @@ class ApiService {
         credentials: "include",
         body: JSON.stringify({ content: commentText }),
       });
-       if (!response.ok) throw new Error("Failed to add comment");
+      if (!response.ok) throw new Error("Failed to add comment");
       return response.json();
     } catch (error) {
+      console.error("Error in addComment:", error.message);
       return {
         success: false,
         message: "Unable to add comment. Please try again later.",
