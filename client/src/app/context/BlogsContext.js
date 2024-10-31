@@ -37,18 +37,25 @@ export const BlogsProvider = ({ children }) => {
 
   const createBlog = async (blogData) => {
     try {
-      const response = await axios.post(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
-        blogData,
         {
-          withCredentials: true,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(blogData),
+          credentials: "include",
         }
       );
 
-      if (response.status === 201) {
-        const newBlog = response.data;
+      if (response.ok) {
+        const newBlog = await response.json();
         setBlogs((prevBlogs) => [...prevBlogs, newBlog]);
         return { success: true };
+      } else {
+        console.error("Create blog error:", response.statusText);
+        return { success: false };
       }
     } catch (error) {
       console.error("Create blog error:", error);
