@@ -79,6 +79,7 @@ const BlogDetail = ({ blogId }) => {
       </div>
     );
   }
+  console.warn(blog, "BLOG")
 
   return (
     <div className="blog-detail-page">
