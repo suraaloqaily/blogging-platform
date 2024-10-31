@@ -60,7 +60,11 @@ class ApiService {
         credentials: "include",
       });
       if (!response.ok) throw new Error("Failed to like blog");
-      return response.json();
+      const result = await response.json();
+      return {
+        ...result,
+        likeCount: result.like_count,
+      };
     } catch (error) {
       return {
         success: false,

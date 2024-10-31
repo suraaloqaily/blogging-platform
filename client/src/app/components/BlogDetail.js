@@ -59,7 +59,9 @@ const BlogDetail = ({ blogId }) => {
   const handleLike = async () => {
     try {
       const data = await apiService.likeBlog(blogId);
-      setLikeCount(data.likeCount);
+      setLikeCount(
+        likeData.likeCount || (isLiked ? likeCount - 1 : likeCount + 1)
+      );
       setIsLiked(data.liked);
     } catch (error) {
       console.error("Error handling like:", error);

@@ -11,7 +11,7 @@ const Blog = ({ data, isAuthor }) => {
   const { user } = useAuth();
   const { deleteBlog } = useBlogs();
   const router = useRouter();
-
+  console.log(data, "BLOG : INSIDE BLOG COPM");
   const [likeCount, setLikeCount] = useState(data.like_count || 0);
   const [isLiked, setIsLiked] = useState(false);
   const [comments, setComments] = useState([]);
@@ -56,7 +56,9 @@ const Blog = ({ data, isAuthor }) => {
     e.stopPropagation();
     try {
       const likeData = await apiService.likeBlog(data.id);
-      setLikeCount(likeData.likeCount);
+     setLikeCount(
+       likeData.likeCount || (isLiked ? likeCount - 1 : likeCount + 1)
+     ); 
       setIsLiked(likeData.liked);
     } catch (error) {
       console.error(error);
