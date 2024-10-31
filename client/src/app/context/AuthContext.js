@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
           headers: {
             Authorization: `Bearer ${cookies.token}`,
           },
-          credentials: "true",
+          credentials: "include",
         }
       );
 
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "true",
+          credentials: "include",
           body: JSON.stringify(credentials),
         }
       );
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await fetch(`${process.env.NEXT_PUBLIC_SERVER_API_URL}auth/logout`, {
         method: "POST",
-        credentials: "true",
+        credentials: "include",
       });
     } catch (error) {
       console.error("Logout error:", error);
@@ -108,7 +108,7 @@ export const AuthProvider = ({ children }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.token}`,
           },
-          credentials: "true",
+          credentials: "include",
           body: JSON.stringify(formData),
         }
       );

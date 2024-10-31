@@ -10,7 +10,7 @@ class ApiService {
   async fetchComments(blogId) {
     try {
       const response = await fetch(`${this.baseUrl}/${blogId}/comments`, {
-        credentials: "true",
+        credentials: "include",
       });
       if (!response.ok) throw new Error("Failed to fetch comments");
       return response.json();
@@ -25,7 +25,7 @@ class ApiService {
   async checkIfLiked(blogId) {
     try {
       const response = await fetch(`${this.baseUrl}/${blogId}/check-like`, {
-        credentials: "true",
+        credentials: "include",
       });
       if (!response.ok) throw new Error("Failed to check like status");
       return response.json();
@@ -41,7 +41,7 @@ class ApiService {
     try {
       const response = await fetch(`${this.baseUrl}/${blogId}/like`, {
         method: "POST",
-        credentials: "true",
+        credentials: "include",
       });
       if (!response.ok) throw new Error("Failed to like blog");
       return response.json();
@@ -57,7 +57,7 @@ class ApiService {
     try {
       const response = await fetch(`${this.baseUrl}/${blogId}`, {
         method: "DELETE",
-        credentials: "true",
+        credentials: "include",
       });
       if (!response.ok) throw new Error("Failed to delete blog");
       return response.json();
@@ -74,7 +74,7 @@ class ApiService {
       const response = await fetch(`${this.baseUrl}/${blogId}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "true",
+        credentials: "include",
         body: JSON.stringify({ content: commentText }),
       });
       if (!response.ok) throw new Error("Failed to add comment");
@@ -90,7 +90,7 @@ class ApiService {
   async fetchBlogDetails(blogId) {
     try {
       const blogRes = await fetch(`${this.baseUrl}/blogId/${blogId}`, {
-        credentials: "true",
+        credentials: "include",
       });
 
       if (!blogRes.ok) {
