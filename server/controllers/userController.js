@@ -1,5 +1,5 @@
 const { generateToken } = require("../utils/auth");
-const { prisma } = require("../prisma/prismaClient");
+const prisma  = require("../prisma/prismaClient");
 
 const updateProfile = async (req, res) => {
   try {

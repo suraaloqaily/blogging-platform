@@ -1,4 +1,4 @@
-const { prisma } = require("../prisma/prismaClient");
+const  prisma  = require("../prisma/prismaClient");
 
 const createComment = async (req, res) => {
   try {
