@@ -33,7 +33,6 @@ jobs:
         working-directory: client
         run: |
           npm run build
-          npm run export
 
       - name: 📤 Upload Build Artifact
         uses: actions/upload-pages-artifact@v3
