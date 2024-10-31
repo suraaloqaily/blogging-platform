@@ -6,7 +6,6 @@ class ApiService {
     }
     this.baseUrl = `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`;
     ApiService.instance = this;
-
   }
   async fetchComments(blogId) {
     const cookies = parseCookies();
@@ -105,6 +104,7 @@ class ApiService {
         credentials: "include",
         body: JSON.stringify({ content: commentText }),
       });
+      console.log(response.json(), "COMMENT");
       if (!response.ok) throw new Error("Failed to add comment");
       return response.json();
     } catch (error) {

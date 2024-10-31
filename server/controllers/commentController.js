@@ -33,7 +33,13 @@ const createComment = async (req, res) => {
         },
       },
     });
-
+    console.log(
+      {
+        ...commentWithAuthor,
+        author_name: commentWithAuthor.user.name,
+      },
+      "NEW COMMENT: ADDED"
+    );
     return res.status(201).json({
       ...commentWithAuthor,
       author_name: commentWithAuthor.user.name,

@@ -47,7 +47,8 @@ const BlogDetail = ({ blogId }) => {
     if (!commentText.trim()) return;
 
     try {
-      const newComment = await apiService.addComment(blogId, commentText);
+      const newComment = await apiService.addComment( blogId, commentText );
+      console.log("New comment Added", newComment);
       setComments((prevComments) => [...prevComments, newComment]);
       setCommentText("");
     } catch (error) {
