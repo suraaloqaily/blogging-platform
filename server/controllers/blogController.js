@@ -116,12 +116,14 @@ const deleteBlog = async (req, res) => {
 
 const getBlogById = async (req, res) => {
   try {
+    console.log("id: ", id);
     const { id } = req.params;
     const blogId = parseInt(id, 10);
-
+    
     if (isNaN(blogId)) {
       return res.status(400).json({ error: "Invalid blog ID" });
     }
+    console.log("blogId: ", blogId);
     const blog = await prisma.blog.findUnique({
       where: { blogId },
       include: {
