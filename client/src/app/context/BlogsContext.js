@@ -35,26 +35,30 @@ export const BlogsProvider = ({ children }) => {
     }
   }, [ user, router.pathname ] );
   
- const createBlog = async (blogData) => {
-   try {
-     const response = await axios.post(
-       `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
-       blogData,
-       {
-         withCredentials: true,
-       }
-     );
+  const createBlog = async (blogData) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(blogData),
+        }
+      );
 
-     if (response.status === 201) {
-       const newBlog = response.data;
-       setBlogs((prevBlogs) => [...prevBlogs, newBlog]);
-       return { success: true };
-     }
-   } catch (error) {
-     console.error("Create blog error:", error);
-     return { success: false };
-   }
- };
+      if (response.ok) {
+        const newBlog = await response.json();
+        setBlogs([...blogs, newBlog]);
+        return { success: true };
+      }
+    } catch (error) {
+      console.error("Create blog error:", error);
+      return { success: false };
+    }
+  };
 
   const updateBlogLikes = (id, likeCount, isLiked) => {
     setBlogs((prevBlogs) => {
