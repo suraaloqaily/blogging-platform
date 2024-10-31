@@ -92,6 +92,9 @@ class ApiService {
   }
 
   async addComment(blogId, commentText) {
+    console.log(JSON.stringify({ content: commentText }));
+    console.log(commentText);
+    console.log(commentText);
     try {
       const cookies = parseCookies();
 
@@ -102,7 +105,7 @@ class ApiService {
           Authorization: `Bearer ${cookies.token}`,
         },
         credentials: "include",
-        body: JSON.stringify({ content: commentText }),
+        body: { content: commentText },
       });
       console.log(response.json(), "COMMENT");
       if (!response.ok) throw new Error("Failed to add comment");

@@ -1,6 +1,7 @@
 import { format, addHours } from "date-fns";
 
 const formatDateHelper = (timeString) => {
+  console.log(timeString, "TIME STRING");
   try {
     const match = timeString.match(/^(\d{1,2}):(\d{2}):(\d{2})\..*\+(\d{2})/);
     if (match) {
