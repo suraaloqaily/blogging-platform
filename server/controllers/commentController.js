@@ -15,7 +15,6 @@ const createComment = async (req, res) => {
     if (!content || content.trim().length === 0) {
       return res.status(400).json({ error: "Comment content is required" });
     }
-
     const newComment = await prisma.comment.create({
       data: {
         blogId: parseInt(blog_id),
@@ -24,6 +23,10 @@ const createComment = async (req, res) => {
         createdAt: new Date(),
       },
     });
+    console.log(newComment, "newComment");
+    console.log(user_id, "user_id");
+    console.log(content, "content");
+    console.log(createdAt, "new Date()");
 
     const commentWithAuthor = await prisma.comment.findUnique({
       where: { id: newComment.id },
