@@ -129,6 +129,9 @@ const getBlogById = async (req, res) => {
         user: {
           select: { name: true },
         },
+        _count: {
+          select: { likes: true },
+        },
       },
     });
 
@@ -136,7 +139,10 @@ const getBlogById = async (req, res) => {
       return res.status(404).json({ error: "Blog not found" });
     }
 
-    res.json(blog);
+    res.json({
+      ...blog,
+      like_count: blog._count.likes,
+    });
   } catch (error) {
     console.error("Error fetching blog:", error);
     res.status(500).json({ error: "Server error" });
