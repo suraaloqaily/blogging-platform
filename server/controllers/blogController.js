@@ -154,7 +154,7 @@ const updateBlog = async (req, res) => {
       return res.status(400).json({ error: "Invalid blog ID" });
     }
     const blog = await prisma.blog.findUnique({
-      where: { id: blogId },  
+      where: { id: blogId },
       select: { userId: true },
     });
 
@@ -169,7 +169,7 @@ const updateBlog = async (req, res) => {
     }
 
     const updatedBlog = await prisma.blog.update({
-      where: { id: blogId },  
+      where: { id: blogId },
       data: {
         title,
         content,
@@ -187,7 +187,7 @@ const updateBlog = async (req, res) => {
 const likeBlog = async (req, res) => {
   console.log("Request parameters Like Blog:", req.params);
   try {
-    const { id } = req.params; 
+    const { id } = req.params;
     const userId = req.user.id;
     const blogId = parseInt(id, 10);
 
@@ -212,7 +212,10 @@ const likeBlog = async (req, res) => {
       return res.json({ liked: false, message: "Like removed." });
     } else {
       await prisma.like.create({ data: { userId, blogId } });
-      return res.json({ liked: true, message: "Blog liked." });
+      return res.json({
+        liked: false,
+        likeCount: parseInt(likeCount.rows[0].count),
+      });
     }
   } catch (error) {
     console.error("Error liking blog:", error);
@@ -235,13 +238,15 @@ const checkLike = async (req, res) => {
       where: { userId, blogId },
     });
 
-    res.json({ liked: !!existingLike });
+    res.json({
+      liked: existingLike.rows.length > 0,
+      like_count: likesCount.rowCount,
+    });
   } catch (error) {
     console.error("Error checking like:", error);
     res.status(500).json({ message: "Server error while checking like." });
   }
 };
-
 
 module.exports = {
   createBlog,
