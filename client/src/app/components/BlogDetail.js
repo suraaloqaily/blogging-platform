@@ -56,16 +56,16 @@ const BlogDetail = ({ blogId }) => {
     }
   };
 
-  const handleLike = async () => {
+  const handleLike = async (e) => {
+    e.stopPropagation();
     try {
-      const data = await apiService.likeBlog(blogId);
-      setLikeCount(data.liked ? likeCount + 1 : likeCount - 1);
-      setIsLiked(data.liked);
+      const likeData = await apiService.likeBlog(data.id);
+      setLikeCount(likeData.liked ? likeCount + 1 : likeCount - 1);
+      setIsLiked(likeData.liked);
     } catch (error) {
-      console.error("Error handling like:", error);
+      console.error(error);
     }
   };
-
   if (isLoading || !blog) {
     return (
       <div
