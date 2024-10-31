@@ -105,7 +105,7 @@ const deleteBlog = async (req, res) => {
         .json({ message: "Unauthorized to delete this blog" });
     }
 
-    await prisma.blog.delete({ where: { id: blogId } }); // Changed blogId to id
+    await prisma.blog.delete({ where: { id: blogId } });
 
     res.json({ message: "Blog deleted successfully" });
   } catch (error) {
@@ -232,7 +232,7 @@ const likeBlog = async (req, res) => {
 const checkLike = async (req, res) => {
   console.log("Request parameters check blog:", req.params);
   try {
-    const { id } = req.params;
+    const id = req.params.id;
     const userId = req.user.id;
     const blogId = parseInt(id, 10);
     if (isNaN(blogId)) {

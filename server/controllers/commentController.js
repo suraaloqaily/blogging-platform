@@ -1,9 +1,8 @@
-const  prisma  = require("../prisma/prismaClient");
+const prisma = require("../prisma/prismaClient");
 
 const createComment = async (req, res) => {
-  try
-  {
-     console.log("Request parameters createComment:", req.params);
+  try {
+    console.log("Request parameters createComment:", req.params);
     const { blog_id } = req.params;
     const { content } = req.body;
     const user_id = req.user.id;
@@ -48,11 +47,10 @@ const createComment = async (req, res) => {
   }
 };
 
-const getBlogComments = async ( req, res ) =>
-{
-   console.log("Request parameters getBlogComments:", req.params);
+const getBlogComments = async (req, res) => {
+  console.log("Request parameters getBlogComments:", req.params);
   try {
-    const { blog_id } = req.params;
+    const blog_id = req.params.blogId;
 
     const comments = await prisma.comment.findMany({
       where: { blogId: parseInt(blog_id) },
