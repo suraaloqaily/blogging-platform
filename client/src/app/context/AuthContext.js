@@ -18,11 +18,11 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
         return;
       }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_API_URL}auth/session`,
         {
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${cookies.token}`,
           },
           credentials: "include",
@@ -85,11 +85,16 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
+      const cookies = parseCookies();
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_API_URL}auth/logout`,
         {
           method: "POST",
-          credentials: "include",  
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          credentials: "include",
         }
       );
 

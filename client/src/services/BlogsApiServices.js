@@ -1,3 +1,4 @@
+import { parseCookies } from "nookies";
 class ApiService {
   constructor() {
     if (ApiService.instance) {
@@ -5,11 +6,16 @@ class ApiService {
     }
     this.baseUrl = `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`;
     ApiService.instance = this;
-  }
 
+  }
   async fetchComments(blogId) {
+    const cookies = parseCookies();
     try {
       const response = await fetch(`${this.baseUrl}/${blogId}/comments`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
         credentials: "include",
       });
       if (!response.ok) throw new Error("Failed to fetch comments");
@@ -23,8 +29,13 @@ class ApiService {
   }
 
   async checkIfLiked(blogId) {
+    const cookies = parseCookies();
     try {
       const response = await fetch(`${this.baseUrl}/${blogId}/check-like`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
         credentials: "include",
       });
       if (!response.ok) throw new Error("Failed to check like status");
@@ -39,8 +50,14 @@ class ApiService {
 
   async likeBlog(blogId) {
     try {
+      const cookies = parseCookies();
+
       const response = await fetch(`${this.baseUrl}/${blogId}/like`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
         credentials: "include",
       });
       if (!response.ok) throw new Error("Failed to like blog");
@@ -55,8 +72,14 @@ class ApiService {
 
   async deleteBlog(blogId) {
     try {
+      const cookies = parseCookies();
+
       const response = await fetch(`${this.baseUrl}/${blogId}`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
         credentials: "include",
       });
       if (!response.ok) throw new Error("Failed to delete blog");
@@ -71,9 +94,14 @@ class ApiService {
 
   async addComment(blogId, commentText) {
     try {
+      const cookies = parseCookies();
+
       const response = await fetch(`${this.baseUrl}/${blogId}/comments`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
         credentials: "include",
         body: JSON.stringify({ content: commentText }),
       });
@@ -89,7 +117,13 @@ class ApiService {
 
   async fetchBlogDetails(blogId) {
     try {
+      const cookies = parseCookies();
+
       const blogRes = await fetch(`${this.baseUrl}/blogId/${blogId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
         credentials: "include",
       });
 
