@@ -22,7 +22,7 @@ export default function SignupForm() {
         setIsSuccess(true);
         setTimeout(() => {
           router.push("/login");
-        }, 2000);
+        }, 500);
       }
     } catch (err) {
       setError("An unexpected error occurred");
