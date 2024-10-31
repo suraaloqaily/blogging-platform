@@ -185,8 +185,7 @@ const updateBlog = async (req, res) => {
 };
 
 const likeBlog = async (req, res) => {
-  console.log("Request parameters Like Blog:", req.params);
-  try {
+   try {
     const { id } = req.params;
     const userId = req.user.id;
     const blogId = parseInt(id, 10);
@@ -209,13 +208,16 @@ const likeBlog = async (req, res) => {
 
     if (existingLike) {
       await prisma.like.delete({ where: { id: existingLike.id } });
-      return res.json({ liked: false, message: "Like removed." });
+      const likeCount = await prisma.like.count({ where: { blogId } });
+      return {
+        liked: false,
+        message: "Like removed.",
+        like_count: likeCount,
+      };
     } else {
       await prisma.like.create({ data: { userId, blogId } });
-      return res.json({
-        liked: false,
-        likeCount: parseInt(likeCount.rows[0].count),
-      });
+      const likeCount = await prisma.like.count({ where: { blogId } });
+      return { liked: true, message: "Blog liked.", like_count: likeCount };
     }
   } catch (error) {
     console.error("Error liking blog:", error);
@@ -224,11 +226,14 @@ const likeBlog = async (req, res) => {
 };
 
 const checkLike = async (req, res) => {
-  console.log("Request parameters check blog:", req.params);
   try {
     const { id } = req.params;
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const blogId = parseInt(id, 10);
+
+    if (!userId) {
+      return res.status(401).json({ message: "User not authenticated." });
+    }
 
     if (isNaN(blogId)) {
       return res.status(400).json({ error: "Invalid blog ID." });
@@ -238,16 +243,16 @@ const checkLike = async (req, res) => {
       where: { userId, blogId },
     });
 
-    res.json({
-      liked: existingLike.rows.length > 0,
-      like_count: likesCount.rowCount,
+    const likeCount = await prisma.like.count({
+      where: { blogId },
     });
+
+    res.status(200).json({ liked: !!existingLike, like_count: likeCount });
   } catch (error) {
     console.error("Error checking like:", error);
     res.status(500).json({ message: "Server error while checking like." });
   }
 };
-
 module.exports = {
   createBlog,
   getBlogs,
