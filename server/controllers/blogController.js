@@ -6,7 +6,7 @@ const createBlog = async (req, res) => {
     const userId = req.user.id;
 
     const userQuery = await pool.query(
-      'SELECT name, profilePicture FROM "User" WHERE id = $1',
+      'SELECT name, "profilePicture" FROM "User" WHERE id = $1',
       [userId]
     );
 
@@ -18,7 +18,7 @@ const createBlog = async (req, res) => {
     const userProfilePicture = userQuery.rows[0].profilePicture;
 
     const newBlog = await pool.query(
-      'INSERT INTO "Blog"(userId, title, content, authorName, authorImage, createdAt) VALUES($1, $2, $3, $4, $5, NOW()) RETURNING *',
+      'INSERT INTO "Blog"("userId", title, content, "authorName", "authorImage", "createdAt") VALUES($1, $2, $3, $4, $5, NOW()) RETURNING *',
       [userId, title, content, userName, userProfilePicture]
     );
 
@@ -32,10 +32,10 @@ const createBlog = async (req, res) => {
 const getBlogs = async (req, res) => {
   try {
     const blogs = await pool.query(`
-      SELECT b.*, u.name as authorName,
-      (SELECT COUNT(*) FROM "Like" WHERE blogId = b.id) as like_count
+      SELECT b.*, u.name as "authorName",
+      (SELECT COUNT(*) FROM "Like" WHERE "blogId" = b.id) as like_count
       FROM "Blog" b 
-      JOIN "User" u ON b.userId = u.id
+      JOIN "User" u ON b."userId" = u.id
     `);
     res.json(blogs.rows);
   } catch (error) {
@@ -48,7 +48,7 @@ const getBlogsByUserId = async (req, res) => {
   try {
     const { id } = req.params;
     const blogs = await pool.query(
-      'SELECT b.*, u.name as authorName FROM "Blog" b JOIN "User" u ON b.userId = u.id WHERE b.userId = $1',
+      'SELECT b.*, u.name as "authorName" FROM "Blog" b JOIN "User" u ON b."userId" = u.id WHERE b."userId" = $1',
       [id]
     );
     res.json(blogs.rows);
@@ -64,7 +64,7 @@ const deleteBlog = async (req, res) => {
     const userId = req.user.id;
 
     const blogCheck = await pool.query(
-      'SELECT userId FROM "Blog" WHERE id = $1',
+      'SELECT "userId" FROM "Blog" WHERE id = $1',
       [id]
     );
 
@@ -91,9 +91,9 @@ const getBlogById = async (req, res) => {
     const { id } = req.params;
 
     const query = `
-      SELECT b.*, u.name as authorName 
+      SELECT b.*, u.name as "authorName" 
       FROM "Blog" b 
-      JOIN "User" u ON b.userId = u.id 
+      JOIN "User" u ON b."userId" = u.id 
       WHERE b.id = $1
     `;
 
@@ -116,7 +116,7 @@ const updateBlog = async (req, res) => {
     const userId = req.user.id;
 
     const blogCheck = await pool.query(
-      'SELECT userId FROM "Blog" WHERE id = $1',
+      'SELECT "userId" FROM "Blog" WHERE id = $1',
       [id]
     );
 
@@ -137,7 +137,7 @@ const updateBlog = async (req, res) => {
     const userName = userQuery.rows[0].name;
 
     const updatedBlog = await pool.query(
-      'UPDATE "Blog" SET title = $1, content = $2, authorName = $3, updatedAt = NOW() WHERE id = $4 RETURNING *',
+      'UPDATE "Blog" SET title = $1, content = $2, "authorName" = $3, "updatedAt" = NOW() WHERE id = $4 RETURNING *',
       [title, content, userName, id]
     );
 
@@ -152,18 +152,18 @@ const likeBlog = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;
     const existingLike = await pool.query(
-      'SELECT * FROM "Like" WHERE blogId = $1 AND userId = $2',
+      'SELECT * FROM "Like" WHERE "blogId" = $1 AND "userId" = $2',
       [id, userId]
     );
 
     if (existingLike.rows.length > 0) {
-      await pool.query('DELETE FROM "Like" WHERE blogId = $1 AND userId = $2', [
+      await pool.query('DELETE FROM "Like" WHERE "blogId" = $1 AND "userId" = $2', [
         id,
         userId,
       ]);
 
       const likeCount = await pool.query(
-        'SELECT COUNT(*) FROM "Like" WHERE blogId = $1',
+        'SELECT COUNT(*) FROM "Like" WHERE "blogId" = $1',
         [id]
       );
 
@@ -174,12 +174,12 @@ const likeBlog = async (req, res) => {
     }
 
     await pool.query(
-      'INSERT INTO "Like"(blogId, userId,createdAt) VALUES($1, $2, NOW())',
+      'INSERT INTO "Like"("blogId", "userId","createdAt") VALUES($1, $2, NOW())',
       [id, userId]
     );
 
     const likeCount = await pool.query(
-      'SELECT COUNT(*) FROM "Like" WHERE blogId = $1',
+      'SELECT COUNT(*) FROM "Like" WHERE "blogId" = $1',
       [id]
     );
 
@@ -198,11 +198,11 @@ const checkLike = async (req, res) => {
     const userId = req.user.id;
 
     const existingLike = await pool.query(
-      'SELECT * FROM "Like" WHERE blogId = $1 AND userId = $2',
+      'SELECT * FROM "Like" WHERE "blogId" = $1 AND "userId" = $2',
       [id, userId]
     );
     const likesCount = await pool.query(
-      'SELECT * FROM "Like" WHERE blogId = $1',
+      'SELECT * FROM "Like" WHERE "blogId" = $1',
       [id]
     );
     res.json({

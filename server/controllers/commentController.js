@@ -15,7 +15,7 @@ const createComment = async (req, res) => {
     }
 
     const query = `
-      INSERT INTO "Comment" (blogId, userId, content, createdAt)
+      INSERT INTO "Comment" ("blogId", "userId", content, "createdAt")
       VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
       RETURNING *;
     `;
@@ -27,9 +27,9 @@ const createComment = async (req, res) => {
 
     const commentWithAuthor = await pool.query(
       `
-      SELECT c.*, u.name as authorName
+      SELECT c.*, u.name as "authorName"
       FROM "Comment" c
-      JOIN "User" u ON c.userId = u.id
+      JOIN "User" u ON c."userId" = u.id
       WHERE c.id = $1
     `,
       [newComment.id]
@@ -56,7 +56,7 @@ const getBlogComments = async (req, res) => {
       FROM "Comment" c
       JOIN "User" u ON c.userId = u.id
       WHERE c.blogId = $1
-      ORDER BY c.createdAt DESC
+      ORDER BY c."createdAt" DESC
     `;
 
     const result = await pool.query(query, [blogId]);

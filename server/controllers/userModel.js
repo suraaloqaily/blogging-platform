@@ -15,9 +15,10 @@ const getUserByEmail = async (email) => {
 const createUser = async (name, email, hashedPassword) => {
   try {
     const result = await pool.query(
-      'INSERT INTO "User"(name, email, password, createdAt) VALUES ($1, $2, $3, NOW()) RETURNING *',
+      'INSERT INTO "User"(name, email, password, "createdAt") VALUES ($1, $2, $3, NOW()) RETURNING *',
       [name, email, hashedPassword]
     );
+
     return result;
   } catch (error) {
     console.error("Error creating user:", error);
