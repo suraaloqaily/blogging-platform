@@ -154,7 +154,7 @@ const updateBlog = async (req, res) => {
       return res.status(400).json({ error: "Invalid blog ID" });
     }
     const blog = await prisma.blog.findUnique({
-      where: { id: blogId }, // Changed blogId to id
+      where: { id: blogId },  
       select: { userId: true },
     });
 
@@ -169,7 +169,7 @@ const updateBlog = async (req, res) => {
     }
 
     const updatedBlog = await prisma.blog.update({
-      where: { id: blogId }, // Changed blogId to id
+      where: { id: blogId },  
       data: {
         title,
         content,
@@ -187,7 +187,7 @@ const updateBlog = async (req, res) => {
 const likeBlog = async (req, res) => {
   console.log("Request parameters Like Blog:", req.params);
   try {
-    const { id } = req.params;
+    const { id } = req.params; 
     const userId = req.user.id;
     const blogId = parseInt(id, 10);
 
@@ -195,7 +195,7 @@ const likeBlog = async (req, res) => {
       return res.status(400).json({ error: "Invalid blog ID." });
     }
 
-    const blog = await getBlogById(blogId);
+    const blog = await prisma.blog.findUnique({ where: { id: blogId } });
     if (!blog) {
       return res.status(404).json({ message: "Blog not found." });
     }
@@ -208,20 +208,11 @@ const likeBlog = async (req, res) => {
     });
 
     if (existingLike) {
-      await prisma.like.delete({
-        where: {
-          id: existingLike.id,
-        },
-      });
-      return res.json({ message: "Like removed." });
+      await prisma.like.delete({ where: { id: existingLike.id } });
+      return res.json({ liked: false, message: "Like removed." });
     } else {
-      await prisma.like.create({
-        data: {
-          userId: userId,
-          blogId: blogId,
-        },
-      });
-      return res.json({ message: "Blog liked." });
+      await prisma.like.create({ data: { userId, blogId } });
+      return res.json({ liked: true, message: "Blog liked." });
     }
   } catch (error) {
     console.error("Error liking blog:", error);
@@ -232,18 +223,16 @@ const likeBlog = async (req, res) => {
 const checkLike = async (req, res) => {
   console.log("Request parameters check blog:", req.params);
   try {
-    const id = req.params;
+    const { id } = req.params;
     const userId = req.user.id;
     const blogId = parseInt(id, 10);
+
     if (isNaN(blogId)) {
       return res.status(400).json({ error: "Invalid blog ID." });
     }
 
     const existingLike = await prisma.like.findFirst({
-      where: {
-        userId: userId,
-        blogId: blogId,
-      },
+      where: { userId, blogId },
     });
 
     res.json({ liked: !!existingLike });
@@ -252,6 +241,7 @@ const checkLike = async (req, res) => {
     res.status(500).json({ message: "Server error while checking like." });
   }
 };
+
 
 module.exports = {
   createBlog,
