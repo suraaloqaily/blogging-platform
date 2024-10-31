@@ -85,16 +85,27 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_SERVER_API_URL}auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_API_URL}auth/logout`,
+        {
+          method: "POST",
+          credentials: "include", // Include credentials to send the cookie
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Clear the token cookie on the client side if necessary
+        destroyCookie(null, "token", { path: "/" });
+        setUser(null); // Reset user state
+        router.push("/login"); // Redirect after logout
+        return { success: true };
+      }
+      return { success: false, message: data.message };
     } catch (error) {
       console.error("Logout error:", error);
-    } finally {
-      destroyCookie(null, "token");
-      setUser(null);
-      router.push("/login");
+      return { success: false, message: "Logout failed" };
     }
   };
   const updateUser = async (formData) => {

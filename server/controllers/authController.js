@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const  prisma  = require("../prisma/prismaClient");
+const prisma = require("../prisma/prismaClient");
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -97,21 +97,16 @@ const signup = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  res
-    .clearCookie("token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      domain:
-        process.env.NODE_ENV === "production"
-          ? process.env.DOMAIN_URL
-          : "localhost",
-    })
-    .json({
-      success: true,
-      message: "Logged out successfully",
-    });
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "None",
+    path: "/",
+  });
+
+  return res
+    .status(200)
+    .json({ success: true, message: "Logged out successfully" });
 };
 
 module.exports = { login, signup, logout, checkSession };

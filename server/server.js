@@ -15,13 +15,13 @@ const corsOptions = {
   exposedHeaders: ["Set-Cookie"],
 };
 
-app.options("*", cors(corsOptions));  
-app.use(cors(corsOptions)); 
+app.options("*", cors(corsOptions));
+app.use(cors(corsOptions));
 
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "None",
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
 };
 
 app.use(cookieParser(cookieOptions));
