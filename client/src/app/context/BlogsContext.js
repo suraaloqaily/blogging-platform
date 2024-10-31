@@ -7,7 +7,7 @@ export const BlogsProvider = ({ children }) => {
   const [blogs, setBlogs] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
- 
+
   const fetchBlogs = async () => {
     try {
       const response = await fetch(
@@ -33,25 +33,21 @@ export const BlogsProvider = ({ children }) => {
     if (!isAuthPage && user) {
       fetchBlogs();
     }
-  }, [ user, router.pathname ] );
-  
+  }, [user, router.pathname]);
+
   const createBlog = async (blogData) => {
     try {
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_API_URL}blogs`,
+        blogData,
         {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(blogData),
+          withCredentials: true,
         }
       );
 
-      if (response.ok) {
-        const newBlog = await response.json();
-        setBlogs([...blogs, newBlog]);
+      if (response.status === 201) {
+        const newBlog = response.data;
+        setBlogs((prevBlogs) => [...prevBlogs, newBlog]);
         return { success: true };
       }
     } catch (error) {
