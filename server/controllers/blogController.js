@@ -217,10 +217,13 @@ const likeBlog = async (req, res) => {
     if (existingLike) {
       await prisma.like.delete({ where: { id: existingLike.id } });
       updatedLikeCount = await prisma.like.count({ where: { blogId } });
+      console.log(updatedLikeCount, "updatedLikeCount delet");
       return res.json({ liked: false, likeCount: updatedLikeCount });
     } else {
       await prisma.like.create({ data: { userId, blogId } });
       updatedLikeCount = await prisma.like.count({ where: { blogId } });
+      console.log(updatedLikeCount, "updatedLikeCount creat");
+
       return res.json({ liked: true, likeCount: updatedLikeCount });
     }
   } catch (error) {
@@ -242,7 +245,7 @@ const checkLike = async (req, res) => {
     const existingLike = await prisma.like.findFirst({
       where: { userId, blogId },
     });
-   const totalLikes = await prisma.like.count({
+    const totalLikes = await prisma.like.count({
       where: { blogId },
     });
     res.json({ liked: !!existingLike, like_count: totalLikes });
