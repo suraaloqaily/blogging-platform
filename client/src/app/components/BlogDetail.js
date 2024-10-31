@@ -60,7 +60,8 @@ const BlogDetail = ({ blogId }) => {
     try {
       const data = await apiService.likeBlog(blogId);
       console.log(data, "Dta insdie handle like comming from server");
-      setIsLiked(data.liked);
+      setIsLiked( data.liked );
+      setLikeCount(data.likeCounts)
     } catch (error) {
       console.error("Error handling like:", error);
     }

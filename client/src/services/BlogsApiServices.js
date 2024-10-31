@@ -62,10 +62,7 @@ class ApiService {
       if (!response.ok) throw new Error("Failed to like blog");
       const result = await response.json();
       console.log(result, "Result of fetching data");
-      return {
-        ...result,
-        likeCount: result.like_count,
-      };
+      return result;
     } catch (error) {
       return {
         success: false,
