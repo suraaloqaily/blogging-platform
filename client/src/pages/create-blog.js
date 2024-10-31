@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { FaArrowLeft } from "react-icons/fa";
 import styles from "@/styles/CreateBlog.module.css";
 import { useAuth } from "@/app/context/AuthContext";
-import { useBlogs } from "@/app/context/BlogsContext"; // Import the BlogsContext
+import { useBlogs } from "@/app/context/BlogsContext"; 
 import Loading from "@/app/components/Loading";
 
 const CreateBlog = () => {
@@ -62,7 +62,7 @@ const CreateBlog = () => {
     }
 
     try {
-      const result = await createBlog({ title, content }); // Use createBlog from context
+      const result = await createBlog({ title, content }); 
       if (result.success) {
         router.push("/homepage");
       } else {

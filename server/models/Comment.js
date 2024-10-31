@@ -1,8 +1,8 @@
-// models/Comment.js
+ 
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../db");
-const Blog = require("./Blog"); // Import Blog model for association
-const User = require("./User "); // Import User model for association
+const Blog = require("./Blog");  
+const User = require("./User "); 
 
 class Comment extends Model {}
 

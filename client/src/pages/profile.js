@@ -9,18 +9,8 @@ import Loading from "@/app/components/Loading";
 const Profile = () => {
   const { user, updateUser } = useAuth();
   const containerRef = useRef(null);
-
   const router = useRouter();
 
-  useEffect(() => {
-    if (!user) {
-      router.replace("/login");
-    }
-  }, [user, router]);
-
-  if (!user) {
-    return <Loading />;
-  }
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -31,8 +21,13 @@ const Profile = () => {
     user?.profile_picture || avatar_icon.src
   );
   const [message, setMessage] = useState({ text: "", type: "" });
+  const fileInputRef = useRef(null);
 
-  const fileInputRef = React.useRef(null);
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [user, router]);
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -92,18 +87,22 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
     if (message.text) {
       const timer = setTimeout(() => setMessage({ text: "", type: "" }), 2000);
       return () => clearTimeout(timer);
     }
   }, [message]);
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  if (!user) {
+    return <Loading />;
+  }
 
   return (
     <div className={styles.profileContainer}>

@@ -1,4 +1,4 @@
-// models/Blog.js
+ 
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../db");
 const User = require("./User ");
