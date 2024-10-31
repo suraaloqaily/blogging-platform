@@ -2,31 +2,34 @@ const prisma = require("../prisma/prismaClient");
 
 const createComment = async (req, res) => {
   try {
-    console.log("Request parameters createComment:", req.body);
+    console.log("Request parameters createComment:", req.params);
+    console.log("Request body createComment:", req.body);
+
     const { blogId } = req.params;
     const { content } = req.body;
-    console.log(content, "CONTENT OF COMMENT");
     const user_id = req.user.id;
 
-    if (!blog_id) {
+    console.log("User  ID:", user_id);
+    console.log("Blog ID:", blogId);
+    console.log("Comment Content:", content);
+
+    if (!blogId) {
       return res.status(400).json({ error: "Blog ID is required" });
     }
 
     if (!content || content.trim().length === 0) {
       return res.status(400).json({ error: "Comment content is required" });
     }
+
     const newComment = await prisma.comment.create({
       data: {
-        blogId: parseInt(blog_id),
+        blogId: parseInt(blogId),
         userId: user_id,
         content: content,
-        createdAt: new Date(),
       },
     });
-    console.log(newComment, "newComment");
-    console.log(user_id, "user_id");
-    console.log(content, "content");
-    console.log(createdAt, "new Date()");
+
+    console.log("New Comment Created:", newComment);
 
     const commentWithAuthor = await prisma.comment.findUnique({
       where: { id: newComment.id },
@@ -38,13 +41,7 @@ const createComment = async (req, res) => {
         },
       },
     });
-    console.log(
-      {
-        ...commentWithAuthor,
-        author_name: commentWithAuthor.user.name,
-      },
-      "NEW COMMENT: ADDED"
-    );
+
     return res.status(201).json({
       ...commentWithAuthor,
       author_name: commentWithAuthor.user.name,
@@ -57,7 +54,6 @@ const createComment = async (req, res) => {
     });
   }
 };
-
 const getBlogComments = async (req, res) => {
   console.log("Request parameters getBlogComments:", req.params);
   try {
