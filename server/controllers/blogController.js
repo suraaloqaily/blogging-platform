@@ -191,7 +191,6 @@ const updateBlog = async (req, res) => {
 };
 
 const likeBlog = async (req, res) => {
-  console.log("Request parameters Like Blog:", req.params);
   try {
     const { id } = req.params;
     const userId = req.user.id;
@@ -214,19 +213,21 @@ const likeBlog = async (req, res) => {
       },
     });
 
+    let updatedLikeCount;
     if (existingLike) {
       await prisma.like.delete({ where: { id: existingLike.id } });
-      return res.json({ liked: false, message: "Like removed." });
+      updatedLikeCount = await prisma.like.count({ where: { blogId } });
+      return res.json({ liked: false, likeCount: updatedLikeCount });
     } else {
       await prisma.like.create({ data: { userId, blogId } });
-      return res.json({ liked: true, message: "Blog liked." });
+      updatedLikeCount = await prisma.like.count({ where: { blogId } });
+      return res.json({ liked: true, likeCount: updatedLikeCount });
     }
   } catch (error) {
     console.error("Error liking blog:", error);
     res.status(500).json({ message: "Server error while liking blog." });
   }
 };
-
 const checkLike = async (req, res) => {
   console.log("Request parameters check blog:", req.params);
   try {
@@ -241,8 +242,10 @@ const checkLike = async (req, res) => {
     const existingLike = await prisma.like.findFirst({
       where: { userId, blogId },
     });
-
-    res.json({ liked: !!existingLike });
+   const totalLikes = await prisma.like.count({
+      where: { blogId },
+    });
+    res.json({ liked: !!existingLike, like_count: totalLikes });
   } catch (error) {
     console.error("Error checking like:", error);
     res.status(500).json({ message: "Server error while checking like." });

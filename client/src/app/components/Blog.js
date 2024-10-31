@@ -56,9 +56,7 @@ const Blog = ({ data, isAuthor }) => {
     e.stopPropagation();
     try {
       const likeData = await apiService.likeBlog(data.id);
-     setLikeCount(
-       likeData.likeCount || (isLiked ? likeCount - 1 : likeCount + 1)
-     ); 
+      setLikeCount(likeData.liked ? likeCount + 1 : likeCount - 1);
       setIsLiked(likeData.liked);
     } catch (error) {
       console.error(error);
