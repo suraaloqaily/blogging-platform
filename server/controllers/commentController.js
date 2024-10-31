@@ -1,7 +1,9 @@
 const  prisma  = require("../prisma/prismaClient");
 
 const createComment = async (req, res) => {
-  try {
+  try
+  {
+     console.log("Request parameters createComment:", req.params);
     const { blog_id } = req.params;
     const { content } = req.body;
     const user_id = req.user.id;
@@ -46,7 +48,9 @@ const createComment = async (req, res) => {
   }
 };
 
-const getBlogComments = async (req, res) => {
+const getBlogComments = async ( req, res ) =>
+{
+   console.log("Request parameters getBlogComments:", req.params);
   try {
     const { blog_id } = req.params;
 

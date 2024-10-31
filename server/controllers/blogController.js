@@ -185,6 +185,7 @@ const updateBlog = async (req, res) => {
 };
 
 const likeBlog = async (req, res) => {
+  console.log("Request parameters Like Blog:", req.params);
   try {
     const { id } = req.params;
     const userId = req.user.id;
@@ -229,6 +230,7 @@ const likeBlog = async (req, res) => {
 };
 
 const checkLike = async (req, res) => {
+  console.log("Request parameters check blog:", req.params);
   try {
     const { id } = req.params;
     const userId = req.user.id;
